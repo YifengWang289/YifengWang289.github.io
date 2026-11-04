@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predictive Analytics in R · Yifeng (Chloe) Wang</title>
+<meta name="description" content="Three analyses in R for an electronics retailer weighing a partnership and an acquisition: which brand a customer prefers, how much a new product will sell, and what a competitor&#x27;s shoppers buy togeth">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="../css/style.css">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
+</head>
+<body>
+<header class="site-header"><div class="wrap bar">
+<a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
+<span class="top-note">Business · Data · Product</span>
+</div></header>
+<main class="wrap article">
+<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<p class="kicker reveal">Data · ML</p>
+<h1 class="reveal" style="--d:.08s">Predictive Analytics in R</h1>
+<div class="lead reveal" style="--d:.16s"><p>Three analyses in R for an electronics retailer weighing a partnership and an acquisition: which brand a customer prefers, how much a new product will sell, and what a competitor's shoppers buy together. Each ends in a recommendation and a clear statement of what the data can't support.</p></div>
+<ul class="chips reveal" style="--d:.24s"><li>R (caret, randomForest, C5.0, kernlab, gbm, arules)</li><li>Classification &amp; regression</li><li>Cross-validation &amp; model selection</li><li>Feature selection</li><li>Association rule mining</li><li>Data leakage detection</li><li>Business recommendation</li></ul>
+<div class="prose">
+<h2>Results at a glance</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Method</th>
+<th>Result</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Which brand do customers prefer, Sony or Acer?</td>
+<td>C5.0 and Random Forest, 10-fold CV</td>
+<td>92.3% hold-out accuracy (baseline 62.2%). Salary and age drive it</td>
+<td>Pursue a deeper Sony relationship</td>
+</tr>
+<tr>
+<td>How much will 13 new products sell?</td>
+<td>RF vs SVM vs GBM vs linear, repeated CV</td>
+<td>RF CV RMSE ≈ 719 units (SD of volume = 1,517)</td>
+<td>Re-focus on PCs: 15% of predicted volume, 49% of predicted profit</td>
+</tr>
+<tr>
+<td>What do a competitor's customers buy together?</td>
+<td>Apriori on 9,835 baskets</td>
+<td>Strongest rules: 2–3 items → HP Laptop / iMac, lift 2–2.5</td>
+<td>Treat as a B2B hypothesis to test, not proof</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>1 · Brand preference: Sony or Acer?</h2>
+<p><strong>The question.</strong> A survey of 9,898 customers recorded salary, age, education level, car, zip code, credit, and the brand they preferred. A further 5,000 responses were missing the brand. The retailer wanted to know which brand those people lean toward, and which questions are worth asking at all.</p>
+<p><strong>Approach.</strong> Brand is binary (62% prefer Sony), so this is classification. I split 75/25, trained C5.0 and Random Forest with 10-fold cross-validation, and judged them on the untouched 25%. Education, car and zip code are coded categories, so I treated them as factors, not numbers.</p>
+<p><strong>What the data showed.</strong>
+- Both models land at the same place: <strong>92.5% (C5.0) and 92.3% (RF) on the hold-out set</strong>, against 62.2% for always guessing Sony. I chose RF for its slightly higher CV accuracy (92.1% vs 91.7%); the gap is within noise.
+- <strong>Salary and age carry almost everything.</strong> Credit is a distant third. Education, car and zip code add close to nothing, so those survey questions can be dropped.
+- The relationship is not a straight line. Sony preference swings between ~0% and ~100% in alternating salary-age bands (for example, 100% for under-$40K aged 20–40, but 5% for $60–80K aged 20–40). That's why a tree-based model fits so much better than a linear one would.</p>
+<p><img loading="lazy" alt="Variable importance" src="../assets/pta-r-analytics/charts/brand-01-variable-importance.png" />
+<img loading="lazy" alt="Sony preference by salary and age" src="../assets/pta-r-analytics/charts/brand-02-salary-age-heatmap.png" /></p>
+<p><strong>Result on the 5,000 unlabelled responses:</strong> 3,108 predicted Sony (62%) and 1,892 Acer (38%), matching the split in the labelled data.</p>
+<p><strong>Recommendation.</strong> Pursue a deeper relationship with Sony, and cut the survey down to salary and age plus anything new worth testing.</p>
+<p><strong>Limits.</strong> Only two brands, so this says nothing about a third option. And the segments are sharp enough that I'd want to confirm they're real behaviour, not an artifact of how the survey data was generated.</p>
+<hr />
+<h2>2 · Sales forecast for new products</h2>
+<p><strong>The question.</strong> For 13 upcoming PCs, laptops, netbooks and smartphones, predict unit sales and the profit each would add, using 80 existing products with price, review counts, service reviews, dimensions and sales volume.</p>
+<p><strong>Approach.</strong>
+1. <strong>Encode and explore.</strong> One-hot encoded product type; built a correlation matrix against volume.
+2. <strong>Catch a leak.</strong> The 5-star review count has a correlation of 1.00 with volume. In this dataset volume is exactly 4 × the 5-star count, so a model using it would look perfect and tell the retailer nothing about new products. I removed it, along with 3- and 2-star counts (collinear with 4-star), dimensions, weight, margin and product ID (all near zero correlation with volume). Best-seller rank was a third missing, so I dropped it.
+3. <strong>Compare four models</strong> with 10-fold CV repeated three times: Random Forest, SVM (polynomial), Gradient Boosting and linear regression.
+4. <strong>Choose on more than RMSE.</strong> The deciding test was whether the model produces usable forecasts for the new products.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>CV RMSE</th>
+<th>Negative forecasts on new products</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SVM (poly)</td>
+<td>676</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Random Forest</strong></td>
+<td><strong>719</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>Linear regression</td>
+<td>806</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Gradient Boosting</td>
+<td>969</td>
+<td>7</td>
+</tr>
+</tbody>
+</table></div>
+<p>SVM has a slightly lower RMSE, but the gap is small against a noisy 80-row dataset, and it forecasts negative sales for two products. I chose the Random Forest: the only model with no negative forecasts. Anyone using the output would trust a model that can't predict impossible numbers.</p>
+<p><img loading="lazy" alt="Correlation matrix" src="../assets/pta-r-analytics/charts/sales-01-correlation.png" />
+<img loading="lazy" alt="Drivers of predicted volume" src="../assets/pta-r-analytics/charts/sales-02-variable-importance.png" /></p>
+<p><strong>What the forecast shows.</strong> Multiplying predicted units by price and margin gives:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Share of predicted volume</th>
+<th>Share of predicted profit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC</td>
+<td>15%</td>
+<td><strong>49%</strong></td>
+</tr>
+<tr>
+<td>Netbook</td>
+<td><strong>44%</strong></td>
+<td>26%</td>
+</tr>
+<tr>
+<td>Smartphone</td>
+<td>35%</td>
+<td>9%</td>
+</tr>
+<tr>
+<td>Laptop</td>
+<td>6%</td>
+<td>16%</td>
+</tr>
+</tbody>
+</table></div>
+<p><img loading="lazy" alt="Volume is not profit" src="../assets/pta-r-analytics/charts/sales-03-volume-vs-profit.png" /></p>
+<p>The best-selling item is a netbook (~1,360 units, ~$447K revenue). The most profitable is a PC (~391 units, ~$68K profit): high price and margin on modest volume.</p>
+<p><strong>Recommendation.</strong> Put the focus on PCs, which make the most profit per unit sold, and read netbook and smartphone volume as traffic, not profit.</p>
+<p><strong>Limits.</strong> 80 products is a small sample, and the hold-out slice is only 20 products, so I rely on repeated cross-validation, not a single split. A typical forecast is off by ~700 units, large for low-volume products. I'd treat these as rankings of products, not exact unit forecasts.</p>
+<hr />
+<h2>3 · Market basket analysis of a competitor</h2>
+<p><strong>The question.</strong> The retailer was considering buying a competitor. 9,835 of the competitor's transactions were available, with 125 items. What do customers buy together, and what does that say about the business?</p>
+<p><strong>Approach.</strong> Apriori association rules (support, confidence, lift) after dropping the 22% of single-item baskets, which can't form a rule. I removed redundant rules and checked how each result changed as the thresholds moved.</p>
+<p><strong>What the data showed.</strong>
+- <strong>Top sellers:</strong> iMac (26% of baskets), HP Laptop (19%), CyberPower Gamer Desktop (18%).
+- <strong>Large baskets:</strong> the median basket has 3 items and 38% have five or more. That's unusually large for consumer retail.
+- <strong>Strongest rules (support ≥ 1%):</strong> a monitor plus a desktop or laptop predicts an HP Laptop or iMac with 50–64% confidence and lift 2.0–2.5. For example, {Acer Aspire, ViewSonic Monitor} → HP Laptop at 60% confidence (lift 2.5).
+- <strong>Stricter thresholds:</strong> rules above 85% confidence only exist at very low support (0.15%, 15–37 transactions each). They are real but too thin to plan around.</p>
+<p><img loading="lazy" alt="Top items" src="../assets/pta-r-analytics/charts/basket-01-top-items.png" />
+<img loading="lazy" alt="Rules: support vs confidence" src="../assets/pta-r-analytics/charts/basket-02-rules-scatter.png" /></p>
+<p><strong>Interpretation.</strong> Big baskets of computers and monitors suggest business buyers outfitting offices, so an acquisition could open a B2B channel. This is an inference from basket shape. The data has no customer type field, so confirming it would need account-level data.</p>
+<p><strong>Recommendation.</strong> Treat B2B as the main reason to look closer. Before committing, get customer-segment data to confirm it. Rules like these also support store layout, bundles and cross-sell emails.</p>
+<p><strong>Limits.</strong> Many overlapping rules make it hard to pick the important ones. Lift tells you the association is real, but with 22% single-item baskets and a few dominant items, high support is partly just popularity.</p>
+<hr />
+<h2>What I'd do with more data</h2>
+<ul>
+<li>Add more brands to the survey, so the model answers "which of several brands", not "Sony or Acer".</li>
+<li>Collect a few hundred more products and re-test SVM against RF, since the margin between them is currently noise.</li>
+<li>Join competitor transactions to customer type to test the B2B hypothesis directly.</li>
+</ul>
+<hr />
+<h2>Skills demonstrated</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Where it shows up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classification &amp; model evaluation</td>
+<td>Brand preference: hold-out accuracy against a majority-class baseline, confusion matrices</td>
+</tr>
+<tr>
+<td>Cross-validation &amp; tuning</td>
+<td>All models use caret with CV and tuned hyperparameters</td>
+</tr>
+<tr>
+<td>Detecting data leakage</td>
+<td>Sales: found that 5-star count = volume ÷ 4 and removed it</td>
+</tr>
+<tr>
+<td>Model selection beyond a single metric</td>
+<td>Sales: chose RF over lower-RMSE SVM because SVM forecasts negative sales</td>
+</tr>
+<tr>
+<td>Feature selection</td>
+<td>Correlation matrix to drop dimensions, margin, ID and collinear reviews</td>
+</tr>
+<tr>
+<td>Association rule mining</td>
+<td>Apriori with support / confidence / lift, redundancy filtering, threshold sensitivity</td>
+</tr>
+<tr>
+<td>Business translation</td>
+<td>Volume vs profit split, B2B hypothesis, what to ask in the survey</td>
+</tr>
+<tr>
+<td>Reproducible code</td>
+<td>Three R scripts in <code>assets/pta-r-analytics/code/</code> (set <code>DATA_DIR</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>Code</h2>
+<p>The full analysis as runnable R scripts (fixed seed 123). Point <code>DATA_DIR</code> at the folder with the raw CSVs and run them in order. The raw datasets are not included.</p>
+<ul>
+<li><a href="../assets/pta-r-analytics/code/00_setup.R"><code>00_setup.R</code></a>: shared settings</li>
+<li><a href="../assets/pta-r-analytics/code/01_brand_preference.R"><code>01_brand_preference.R</code></a>: Sony vs Acer classification</li>
+<li><a href="../assets/pta-r-analytics/code/02_sales_prediction.R"><code>02_sales_prediction.R</code></a>: leak check, model comparison, new-product forecast</li>
+<li><a href="../assets/pta-r-analytics/code/03_market_basket.R"><code>03_market_basket.R</code></a>: Apriori rules</li>
+</ul>
+</div>
+<nav class="pager"><a href="balancepoint.html">← BalancePoint</a><a href="ecolab-fda-data-product.html">FDA Compliance Data Product →</a></nav>
+</main>
+<footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
+<nav class="dock" aria-label="Sections">
+<a class="mark" href="../index.html" aria-label="Home">YW</a>
+<a href="../index.html#projects">Projects</a>
+<a class="hide-sm" href="../index.html#experience">Experience</a>
+<a class="btn primary small" href="../index.html#contact">Contact</a>
+</nav>
+<script src="../js/main.js" defer></script>
+</body>
+</html>

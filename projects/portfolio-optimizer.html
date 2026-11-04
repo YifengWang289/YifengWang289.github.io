@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio Optimizer · Yifeng (Chloe) Wang</title>
+<meta name="description" content="A data management Excel project — an interactive Portfolio Optimization dashboard that lets anyone build a diversified, risk-adjusted portfolio and see exactly how it&#x27;s built.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="../css/style.css">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
+</head>
+<body>
+<header class="site-header"><div class="wrap bar">
+<a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
+<span class="top-note">Business · Data · Product</span>
+</div></header>
+<main class="wrap article">
+<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<p class="kicker reveal">Data · Excel/VBA</p>
+<h1 class="reveal" style="--d:.08s">Portfolio Optimizer</h1>
+<div class="lead reveal" style="--d:.16s"><p>A data management Excel project — an interactive <strong>Portfolio Optimization</strong> dashboard that lets anyone build a diversified, risk-adjusted portfolio and see exactly how it's built.</p></div>
+<ul class="chips reveal" style="--d:.24s"><li>Excel</li><li>VBA automation</li><li>data visualization</li><li>simulation &amp; optimization</li><li>quantitative analysis</li><li>data reconciliation</li></ul>
+<div class="prose">
+<h2>The problem</h2>
+<p>People who want to start investing are stuck in the middle. Professional tools (Bloomberg-grade) are complex and expensive; robo-advisors are a black box that allocates <em>for</em> you without teaching you anything. What's missing is a transparent, hands-on tool that lets you build a portfolio yourself — and learn the method while you do it.</p>
+<hr />
+<h2>From a blank sheet to a tool</h2>
+<p>It began as a plain spreadsheet and grew into a dashboard. The design converged on three pillars:</p>
+<ol>
+<li><strong>Navigation &amp; interface</strong> — four buttons wired to VBA macros jump between purpose-built screens, turning a pile of worksheets into a navigable app. <em>(I built this layer, including the VBA.)</em></li>
+<li><strong>A live data source</strong> — the last sheet pulls real market data straight from Yahoo Finance via refreshable web queries and reconciles it into one consistent master table, so the whole dashboard runs on live numbers. <em>(I proposed this data-source design.)</em></li>
+<li><strong>Novice-first visualization</strong> — the most intuitive views for people who don't know finance: the three headline indices, sector overviews, and gainers/losers.</li>
+</ol>
+<p>The portfolio is personalized: you pick your own holdings and run a simulation that returns a suggested allocation — guided, not guesswork.</p>
+<p><img loading="lazy" alt="Walkthrough of the five interfaces" src="../assets/excel-optimizer/demo-walkthrough.gif" /></p>
+<hr />
+<h2>Interface walkthrough</h2>
+<h3>Home — market overview &amp; navigation</h3>
+<p>The landing screen. Live snapshots of the Dow, NASDAQ, and S&amp;P 500, each with a 30-day trend chart, plus a global-index world map, an industry heat map, and live gainers/losers rankings. The icon rail on the left (VBA-driven) jumps to every other screen.</p>
+<p><img loading="lazy" alt="Home overview — indices and 30-day trend charts" src="../assets/excel-optimizer/01-home-overview.png" /></p>
+<p><img loading="lazy" alt="Home — live gainers, decliners, amplitude and turnover rankings" src="../assets/excel-optimizer/02-home-rankings.png" /></p>
+<h3>Portfolio — build &amp; analyze your holdings</h3>
+<p>Your current holdings with full fundamentals (Beta, 52-week high/low, market cap, P/E), a recommended-stocks panel with price-trend charts, and your portfolio broken down by industry — pie, highs/lows, and Beta comparisons across your names.</p>
+<p><img loading="lazy" alt="Portfolio — holdings, recommendations, and industry breakdown" src="../assets/excel-optimizer/03-portfolio.png" /></p>
+<h3>Simulation — the mean-variance engine</h3>
+<p>The analytical core. Filter the stock universe (industry, market-cap, P/E, Beta), then the model computes monthly returns, excess returns, a full <strong>variance-covariance matrix</strong>, and each holding's contribution to risk — the machinery behind Modern Portfolio Theory.</p>
+<p><img loading="lazy" alt="Simulation — returns, excess return, variance-covariance matrix, contribution" src="../assets/excel-optimizer/04-simulation-engine.png" /></p>
+<p>It then runs weight scenarios and reports each portfolio's <strong>return, standard deviation, and Sharpe ratio</strong> to find an efficient mix.</p>
+<p><img loading="lazy" alt="Simulation — scenario weights and results (return / std dev / Sharpe)" src="../assets/excel-optimizer/05-simulation-results.png" /></p>
+<h3>Visuals — macro &amp; sector context</h3>
+<p>So an individual stock isn't judged in isolation: an industry trend chart, sector performance, CPI vs. Fed Funds Rate, GDP vs. unemployment, and volatility by sector — with sector filters to focus the view.</p>
+<p><img loading="lazy" alt="Visuals — macro and sector charts" src="../assets/excel-optimizer/06-visuals.png" /></p>
+<h3>Data — the master database</h3>
+<p>The engine room: one clean table of every tracked security — ticker, exchange, sector, price, market cap, shares outstanding, P/E, Beta, 52-week range, employees, and headquarters — fed by the Yahoo Finance queries and read by every other screen.</p>
+<p><img loading="lazy" alt="Data — master stock database" src="../assets/excel-optimizer/07-data.png" /></p>
+<hr />
+<h2>How it works</h2>
+<ul>
+<li><strong>Modeling:</strong> Markowitz mean-variance optimization — a variance-covariance matrix (<code>COVARIANCE.S</code>), portfolio weights and variance via <code>SUMPRODUCT</code>, Beta, log returns (<code>LN</code>), and future-value projection (<code>FV</code>).</li>
+<li><strong>Scale:</strong> ~29,000 formulas across the workbook; 104 charts and 42 pivot tables.</li>
+<li><strong>Data pipeline &amp; reconciliation:</strong> refreshable Yahoo Finance web queries, reconciled into one consistent master table that every screen reads from — matching tickers, prices, and fundamentals across sources so the dashboard never shows conflicting numbers.</li>
+<li><strong>Interaction:</strong> VBA macros and command buttons for navigation; slicers and filters that recompute live.</li>
+</ul>
+<hr />
+<h2>Skills demonstrated</h2>
+<ul>
+<li><strong>Simulation &amp; optimization</strong> — scenario-based portfolio simulation and mean-variance optimization (Solver) to find an efficient mix.</li>
+<li><strong>Quantitative analysis</strong> — variance-covariance matrix, Beta, excess return, volatility, and Sharpe ratio.</li>
+<li><strong>Data visualization</strong> — a multi-screen dashboard: 100+ charts, a global-index map, and industry heat maps.</li>
+<li><strong>VBA automation</strong> — macro-driven navigation and interactive, recomputing controls.</li>
+<li><strong>Data reconciliation</strong> — consolidating live, multi-source market data into one consistent master table.</li>
+<li><strong>Excel engineering</strong> — ~29,000 formulas, pivot tables, dynamic arrays, and robust lookups.</li>
+</ul>
+<hr />
+<h2>The extension — from Excel toward the web</h2>
+<p>Excel proved the logic; the natural next step is to put it in front of anyone, no spreadsheet required. Bringing it to the web would keep the simulation and the underlying model, trade the raw spreadsheet surface for a guided, novice-friendly flow, and — with an AI layer — let a user state a goal in plain language ("a medium-risk portfolio for a home in 5 years") and have the model translate it into constraints, optimize, and <em>explain each step</em> — directly answering the "black box" problem we started with.</p>
+<hr />
+<h2>Result &amp; recognition</h2>
+<p>A working end-to-end tool — pick stocks, build, simulate, visualize, and get an allocation — plus an elevator pitch. The project earned the <strong>Analytics Excellence Award</strong>, given for excellence in applying analytical techniques to dashboard development.</p>
+<hr />
+</div>
+<nav class="pager"><a href="genai-threat-radar.html">← GenAI Threat Radar</a><a href="llm-review-scorer.html">LLM Review Scorer →</a></nav>
+</main>
+<footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
+<nav class="dock" aria-label="Sections">
+<a class="mark" href="../index.html" aria-label="Home">YW</a>
+<a href="../index.html#projects">Projects</a>
+<a class="hide-sm" href="../index.html#experience">Experience</a>
+<a class="btn primary small" href="../index.html#contact">Contact</a>
+</nav>
+<script src="../js/main.js" defer></script>
+</body>
+</html>

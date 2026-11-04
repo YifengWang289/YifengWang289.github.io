@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BalancePoint · Yifeng (Chloe) Wang</title>
+<meta name="description" content="A mobile app concept that helps graduate students use the 30–60 minute gaps between classes — balancing focused work with real rest, and getting back into study mode without a slump. Built through int">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="../css/style.css">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
+</head>
+<body>
+<header class="site-header"><div class="wrap bar">
+<a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
+<span class="top-note">Business · Data · Product</span>
+</div></header>
+<main class="wrap article">
+<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<p class="kicker reveal">Product · User research</p>
+<h1 class="reveal" style="--d:.08s">BalancePoint</h1>
+<div class="lead reveal" style="--d:.16s"><p>A mobile app concept that helps graduate students use the 30–60 minute gaps between classes — balancing focused work with real rest, and getting back into study mode without a slump. Built through interviews, persona, paper and Figma prototypes, and a moderated usability test.</p></div>
+<ul class="chips reveal" style="--d:.24s"><li>Product discovery</li><li>prioritization &amp; trade-offs</li><li>user research (contextual interviews, synthesis, personas)</li><li>concept generation &amp; selection</li><li>paper → hi-fi prototyping (Figma)</li><li>heuristic evaluation</li><li>usability testing</li></ul>
+<div class="prose">
+<h2>The problem</h2>
+<p>Graduate students often have breaks that are too long to waste and too short to go home — 30 to 60 minutes between classes. Those gaps tend to go one of two ways: scrolling until class starts and arriving unfocused, or grinding through work with no recovery. Existing tools don't cover the gap. Task managers plan the long term, blockers like Forest and Cold Turkey stop distractions but ignore rest, and meditation apps ignore the workload.</p>
+<p><strong>The question:</strong> how might students balance productivity and relaxation inside a short break, so they come out focused and recharged instead of drained or distracted? This is a concept study; nothing shipped and nothing here is a measured result.</p>
+<hr />
+<h2>What the research showed</h2>
+<p>Eight contextual interviews with graduate and early-admit students, held where they actually spend their breaks, were synthesized on an affinity-note board. Four themes came out.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Theme</th>
+<th>What students said</th>
+<th>What it meant for design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Screens eat the break</strong></td>
+<td>Students spend roughly 90% of a break on a phone or laptop (TikTok, YouTube, Instagram). They "get lost" and find it "hard to focus on class afterwards". Screen-time reminders get dismissed.</td>
+<td>Passive reminders won't work. The structure has to be part of the session itself.</td>
+</tr>
+<tr>
+<td><strong>Productivity pressure</strong></td>
+<td>Students use breaks for quick tasks — replying to email, downloading notes, planning around deadlines — and see breaks as "opportunities rather than interruptions".</td>
+<td>Suggest tasks that fit the time left, not a long to-do list.</td>
+</tr>
+<tr>
+<td><strong>Location matters</strong></td>
+<td>Quiet, outlets, proximity to the next class, and familiarity drive where they go.</td>
+<td>Out of scope for v1; noted for later.</td>
+</tr>
+<tr>
+<td><strong>Social recharge</strong></td>
+<td>Social time is a large share of the break, and 7 of 8 said it takes precedence.</td>
+<td>Light social features (not full social network).</td>
+</tr>
+</tbody>
+</table></div>
+<p>The interviews became a persona, <strong>Emma</strong>, a first-year graduate student who prefers short breaks with a tight schedule, doesn't believe in strict screen limits (her classes require a laptop), and wants to finish as much as she can on campus — but gets stuck scrolling when no deadline is pressing. That persona decided what was kept and what was cut.</p>
+<hr />
+<h2>Key decision 1 — which concept to pursue</h2>
+<p>Around 60 early concepts were sketched on a shared brainstorm board before narrowing; a selection is shown below. They ranged from a desk plant that glows when it's time for a walk, a break-zone map, a colour-shifting lamp, a mood-detecting headband, a break-planner app, an AR study pet and a study-together site. Everything on the board was reviewed together, the strongest ideas were voted on, and the shortlist was compared against Emma's four goals: plan the next task, make room for both work and rest, get some social contact, and stay focused.</p>
+<div class="gallery" tabindex="0" aria-label="Scrollable image gallery"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-01.png" alt="Desk plant that glows at break time" width="1200" height="900"><figcaption>Desk plant that glows at break time</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-02.png" alt="Break-room screen; study-together site" width="1200" height="900"><figcaption>Break-room screen; study-together site</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-03.png" alt="Dynamic wall; headphone modes; relax-activity extension" width="1200" height="900"><figcaption>Dynamic wall; headphone modes; relax-activity extension</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-04.png" alt="Break-planner app; task prioritization" width="1200" height="900"><figcaption>Break-planner app; task prioritization</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-05.png" alt="VR scenes; bathroom mirror" width="1200" height="900"><figcaption>VR scenes; bathroom mirror</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-06.png" alt="Smart desk; colour-shifting lamp" width="1200" height="900"><figcaption>Smart desk; colour-shifting lamp</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-07.png" alt="Reclining chair; mood-detection headband" width="1200" height="900"><figcaption>Reclining chair; mood-detection headband</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-08.png" alt="Campus map of break zones" width="1200" height="900"><figcaption>Campus map of break zones</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-09.png" alt="Power nap, focus session, playlist" width="1200" height="900"><figcaption>Power nap, focus session, playlist</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-10.png" alt="Meditation humidifier; AR study pet" width="1200" height="900"><figcaption>Meditation humidifier; AR study pet</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/sketches/sketch-11.png" alt="Social-mode study timer; sensor board" width="1200" height="900"><figcaption>Social-mode study timer; sensor board</figcaption></figure></div>
+<ul>
+<li><strong>Rejected:</strong> the random spinner (fun, but doesn't balance anything), the amenity map (about exploring, not balance), the virtual pet (an existing solution overlaps heavily).</li>
+<li><strong>Kept:</strong> the colour-shifting desk idea, rebuilt as a phone app, combined with plan generation, app restrictions and a leaderboard.</li>
+</ul>
+<p><strong>The trade-off to flag:</strong> the design explicitly <em>does not</em> solve "switch smoothly between rest mode and study mode". It is subjective to measure, and easing the switch (distracting yourself from work) conflicts with Emma's other goal of getting as much done as possible. Interviewees raised the second goal more often, so it won. That unsolved gap is where this case study ends.</p>
+<hr />
+<h2>The solution</h2>
+<p>Four tasks, each tied to a persona goal, walked through on the final prototype.</p>
+<ol>
+<li><strong>Pick the next task that fits the break.</strong> The user states how they feel ("How are you feeling?"), connects Canvas once, and sees tasks that fit the time left before the next class. Negative moods get fewer suggestions to reduce overwhelm.</li>
+<li><strong>Run a work/relax cycle.</strong> The app suggests a split by mood (25 work / 5 relax when positive; 20 work / 10 relax when negative). Users can adjust or reorder it, and colour signals shift as each phase runs out.</li>
+<li><strong>Keep the right apps in the right phase.</strong> Users choose which apps count as work and which as entertainment. Opening the wrong one during a phase triggers a gentle alert.</li>
+<li><strong>Stay motivated with friends.</strong> A leaderboard and a 12-hour friendly challenge ("PK").</li>
+</ol>
+<div class="gallery phones" tabindex="0" aria-label="Scrollable image gallery"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/01-feeling.png" alt="How are you feeling? — mood drives how many tasks and which cycle is suggested" width="804" height="1748"><figcaption>How are you feeling? — mood drives how many tasks and which cycle is suggested</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/03-cycle-home-happy.png" alt="Cycle home — time until next class, points, suggested split" width="804" height="1748"><figcaption>Cycle home — time until next class, points, suggested split</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/06-tasks-all.png" alt="Task suggestions that fit the break" width="804" height="1748"><figcaption>Task suggestions that fit the break</figcaption></figure></div>
+<h3>In detail — app restrictions</h3>
+<p>The goal: help students stay in the right mode without feeling policed. This flow went from paper prototype to hi-fi screens.</p>
+<div class="gallery phones" tabindex="0" aria-label="Scrollable image gallery"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/08-restriction-setup.png" alt="Restriction setup — two buckets only" width="804" height="1748"><figcaption>Restriction setup — two buckets only</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/09-app-list-block-during-relax.png" alt="App list — choose what is blocked during relaxation" width="804" height="1748"><figcaption>App list — choose what is blocked during relaxation</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/11-restriction-saved.png" alt="Confirmation after saving" width="804" height="1748"><figcaption>Confirmation after saving</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/14-alert-work.png" alt="Gentle alert when a blocked app is opened mid-session" width="804" height="1748"><figcaption>Gentle alert when a blocked app is opened mid-session</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/15-alert-relax.png" alt="The same rule applies the other way — work apps during a break" width="804" height="1748"><figcaption>The same rule applies the other way — work apps during a break</figcaption></figure></div>
+<p>Design decisions and why:</p>
+<ul>
+<li><strong>Only two buckets, "Work &amp; Study" and "Relaxation".</strong> Fewer choices at the start; reduces decision load.</li>
+<li><strong>Add / Remove on every app, reversible.</strong> So a mistaken tap is easy to undo.</li>
+<li><strong>One-button alert ("Return to Session").</strong> The alert nudges without a lecture. In the paper prototype it was a 50%-transparent note that could be swapped in during test sessions.</li>
+<li><strong>Restrictions apply in both directions.</strong> Entertainment apps are blocked during work; work apps during relaxation. Emma's interviews showed that people also work through rest, so rest needed protecting too.</li>
+</ul>
+<div class="gallery phones" tabindex="0" aria-label="Scrollable image gallery"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/12-relax-timer.png" alt="Timer screens: relax (green) and work (purple)" width="804" height="1748"><figcaption>Timer screens: relax (green) and work (purple)</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/16-end-of-cycle.png" alt="End of cycle — one more cycle or done" width="804" height="1748"><figcaption>End of cycle — one more cycle or done</figcaption></figure></div>
+<h3>Colour choice came from users, not taste</h3>
+<p>In the early version orange meant relaxation. Testers said orange feels urgent and energetic, not calm. Relaxation became green and focus purple.</p>
+<h3>The social part, simplified by feedback</h3>
+<div class="gallery phones" tabindex="0" aria-label="Scrollable image gallery"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/PROFILE.png" alt="Leaderboard" width="804" height="1748"><figcaption>Leaderboard</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/PK.png" alt="Challenge a friend (12-hour PK)" width="804" height="1748"><figcaption>Challenge a friend (12-hour PK)</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/figma/PK---02.png" alt="PK countdown" width="804" height="1748"><figcaption>PK countdown</figcaption></figure></div>
+<p>The first version had a "follow" system. Testers wanted something lighter, so it was replaced with a simple like.</p>
+<hr />
+<h2>From paper to hi-fi: what was filtered in and out</h2>
+<p>The paper prototype was the first thing users touched. Here is what testers saw before the Figma version:</p>
+<div class="gallery phones" tabindex="0" aria-label="Scrollable image gallery"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/paper/01-restriction-setup.png" alt="Paper: welcome and app restriction setup" width="640" height="813"><figcaption>Paper: welcome and app restriction setup</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/paper/02-app-list.png" alt="Paper: app list with Add / Remove" width="640" height="813"><figcaption>Paper: app list with Add / Remove</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/paper/03-mood.png" alt="Paper: mood picker — each mood opens a different pop-up" width="640" height="813"><figcaption>Paper: mood picker — each mood opens a different pop-up</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/paper/05-canvas-loaded.png" alt="Paper: Canvas integration confirmation (sticky note)" width="640" height="813"><figcaption>Paper: Canvas integration confirmation (sticky note)</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/paper/06-task-suggestions.png" alt="Paper: task suggestions — short vs. longer tasks" width="640" height="813"><figcaption>Paper: task suggestions — short vs. longer tasks</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/paper/07-work-cycle.png" alt="Paper: work cycle with adjustable durations" width="640" height="813"><figcaption>Paper: work cycle with adjustable durations</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/paper/08-colour-shift.png" alt="Paper: colour shift simulated by sliding a pink sheet" width="640" height="813"><figcaption>Paper: colour shift simulated by sliding a pink sheet</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/paper/09-end-of-cycle.png" alt="Paper: end of cycle — Done or Need more" width="640" height="813"><figcaption>Paper: end of cycle — Done or Need more</figcaption></figure></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Prototype</th>
+<th>Fidelity choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Paper</strong></td>
+<td>Black and white on purpose, so feedback was about flow, not looks. Colour only where it carries meaning (work/relax phases). Sticky notes for pop-ups so they could be swapped live; transparent layers so checkmarks could be erased between sessions.</td>
+</tr>
+<tr>
+<td><strong>Figma</strong></td>
+<td>Colour, real task names and times, a countdown snapshot, and animation to replace what was done by hand in paper. Only two of four mood buttons are live, to keep attention on the flow rather than on mood options.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>Testing it</h2>
+<p>Moderated sessions of about 25 minutes were run with a small group of target users (fewer than ten in total), recorded with consent and transcribed. A heuristic evaluation ran alongside.</p>
+<p>Test plan: five tasks ordered from the most-used to the more complex (see suggestions → set app restrictions → adjust a cycle → check a friend's rank → start a challenge), think-aloud, and a post-session Q&amp;A.</p>
+<p><strong>What one 25-minute session showed</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Finding</th>
+<th>What it meant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The points system wasn't clear. The participant couldn't tell how points were earned and suggested showing working hours instead.</td>
+<td>Replace or explain points; show something users already understand.</td>
+</tr>
+<tr>
+<td>Unsure whether tapping an app meant "select" or "block". Suggested a clearer "forbidden" icon.</td>
+<td>Make the state of an app unambiguous.</td>
+</tr>
+<tr>
+<td>Liked Canvas integration but wanted to add her own tasks.</td>
+<td>Allow personal task input, not only imported work.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Three changes made after testing</strong></p>
+<ol>
+<li><strong>Nav bar shows where you are.</strong> The middle tab was always highlighted, so users couldn't tell which page they were on (visibility of system status). It now highlights the current tab.</li>
+<li><strong>A real Back button on the restriction page.</strong> "Save" doubled as "go back", which users didn't expect. Save and Back are now separate, with a confirmation after saving.</li>
+<li><strong>A status bar replaces a fake schedule.</strong> A placeholder schedule looked tappable and did nothing. It's now a live "minutes until next class + points" bar, which turned the main screen into a dashboard.</li>
+</ol>
+<hr />
+<h2>The product thinking behind it</h2>
+<p>A few calls in this project were product decisions more than design ones:</p>
+<ul>
+<li><strong>Framed the problem narrowly.</strong> "Students waste time" is too broad. Interviews pointed to one slot, the 30–60 minute gap between classes, and that became the scope. It also explained why existing tools (long-term planners, blockers, meditation apps) missed it.</li>
+<li><strong>Chose a goal and named what was left out.</strong> Two of Emma's goals conflicted, so the one interviewees raised most was chosen and the other was written down as given up.</li>
+<li><strong>Used evidence for each decision, and said when it was thin.</strong> Fewer tasks for negative moods, green for relaxation, likes instead of follow, a status bar instead of a dead placeholder: each traces to something users said or did in testing.</li>
+<li><strong>Scoped each prototype to what it needed to teach.</strong> Black-and-white paper to test flow; hi-fi with only two live mood buttons to keep the test on the core path.</li>
+<li><strong>Turned test findings into a change list, and kept the rest visible.</strong> Three changes shipped into the prototype. The participant's other requests (clearer points, a "forbidden" icon, custom tasks) stayed open and are listed above.</li>
+</ul>
+<p><strong>Where it stops.</strong> Everything here is from interviews and a small number of prototype tests. There are no usage or retention numbers, and the app was never built, so there is no way to say whether the cycle would hold up over weeks. The open question is the one deliberately left unsolved: helping students move back into study mode after rest.</p>
+<hr />
+<h2>How the work unfolded</h2>
+<p>The research and design trail, in order:</p>
+<p><strong>1. Affinity notes</strong> — interview notes grouped into themes (choosing a location, class schedule, tech use, travel time, break planning, study activities). Photos from the interviews sit next to the notes they informed.</p>
+<div class="gallery" tabindex="0" aria-label="Scrollable image gallery"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/notes-01-affinity-overview.png" alt="Affinity overview" width="1854" height="1072"><figcaption>Affinity overview</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/notes-02-choosing-a-location.png" alt="Choosing a location" width="1432" height="1248"><figcaption>Choosing a location</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/notes-03-class-schedule.png" alt="Class schedule" width="994" height="1262"><figcaption>Class schedule</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/notes-04-study-tools.png" alt="Study tools" width="1932" height="986"><figcaption>Study tools</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/notes-05-tech-use.png" alt="Tech use during breaks" width="1496" height="1232"><figcaption>Tech use during breaks</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/notes-06-travel-and-transport.png" alt="Travel and transportation" width="756" height="1230"><figcaption>Travel and transportation</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/notes-07-break-planning.png" alt="Break-planning considerations" width="1548" height="1202"><figcaption>Break-planning considerations</figcaption></figure><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/notes-08-study-activities.png" alt="Study activities" width="1300" height="1276"><figcaption>Study activities</figcaption></figure></div>
+<p><strong>2. Task flows</strong> — each of the four tasks mapped step by step, which also served as the information architecture.</p>
+<div class="figwrap"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/ia-task-flow.png" alt="Task flows" width="2139" height="1412"><figcaption>Task flows</figcaption></figure></div>
+<p><strong>3. Low-fidelity to high-fidelity</strong> — the paper sketches and the Figma screens side by side, as summarized on the project poster.</p>
+<div class="figwrap"><figure><img loading="lazy" loading="lazy" src="../assets/info5355/process/poster-insights-and-prototypes.png" alt="Insights and prototypes, from the project poster" width="1920" height="1578"><figcaption>Insights and prototypes, from the project poster</figcaption></figure></div>
+<hr />
+<h2>Skills demonstrated</h2>
+<ul>
+<li><strong>Product framing &amp; trade-offs</strong> — a narrow problem slot, one conflicting goal chosen over another, with the cut goal written down.</li>
+<li><strong>Evidence-to-decision</strong> — each design change traced to an interview or test finding; limits stated.</li>
+<li><strong>User research</strong> — contextual interviews in the participants' own spaces, affinity synthesis, persona.</li>
+<li><strong>Concept selection</strong> — 60 ideas narrowed by voting and persona-fit, with an explicit unsolved trade-off.</li>
+<li><strong>Interaction design</strong> — decisions justified against usability heuristics (visibility, natural mapping, error prevention, Hick's law).</li>
+<li><strong>Prototyping</strong> — paper then hi-fi Figma; deliberate choices about what to leave out at each fidelity.</li>
+<li><strong>Usability testing</strong> — protocol, think-aloud, task design, and findings mapped to changes.</li>
+</ul>
+<hr />
+</div>
+<nav class="pager"><a href="notion-voice-ai.html">← Notion Voice AI</a><a href="pta-r-analytics.html">Predictive Analytics in R →</a></nav>
+</main>
+<footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
+<nav class="dock" aria-label="Sections">
+<a class="mark" href="../index.html" aria-label="Home">YW</a>
+<a href="../index.html#projects">Projects</a>
+<a class="hide-sm" href="../index.html#experience">Experience</a>
+<a class="btn primary small" href="../index.html#contact">Contact</a>
+</nav>
+<script src="../js/main.js" defer></script>
+</body>
+</html>

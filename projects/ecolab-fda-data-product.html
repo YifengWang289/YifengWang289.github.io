@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FDA Compliance Data Product · Yifeng (Chloe) Wang</title>
+<meta name="description" content="A data product built for a global hygiene and food-safety services company: it pulls scattered public FDA inspection, recall and warning-letter data into one searchable dashboard, so account teams can">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="../css/style.css">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
+</head>
+<body>
+<header class="site-header"><div class="wrap bar">
+<a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
+<span class="top-note">Business · Data · Product</span>
+</div></header>
+<main class="wrap article">
+<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<p class="kicker reveal">Data · Python · Tableau</p>
+<h1 class="reveal" style="--d:.08s">FDA Compliance Data Product</h1>
+<div class="lead reveal" style="--d:.16s"><p>A data product built for a global hygiene and food-safety services company: it pulls scattered public FDA inspection, recall and warning-letter data into one searchable dashboard, so account teams can spot facilities with food-safety problems that its services could fix.</p></div>
+<ul class="chips reveal" style="--d:.24s"><li>Python (API ingestion, pandas)</li><li>Data cleaning &amp; merging</li><li>Entity matching</li><li>Requirements &amp; stakeholder discovery</li><li>Tableau</li><li>Data documentation &amp; handoff</li><li>Exploratory analysis</li></ul>
+<div class="prose">
+<h2>The problem</h2>
+<p>FDA inspection, recall and warning-letter data is public, but it sits on separate FDA pages with different formats and identifiers. The same company shows up under different names, records are missing fields, and related facts live in different places. Someone looking for sales opportunities had to open several FDA sites, search each one, and stitch the story together by hand.</p>
+<p>The client wanted one place to answer: which facilities have repeated problems, what are they cited for, and where is regulatory activity concentrated, so its teams can approach them with hygiene, pest-management and training services.</p>
+<hr />
+<h2>Who uses it and what they ask</h2>
+<p>Weekly sessions with the client's team shaped the requirements. The main user is an account or insights person who wants to:</p>
+<ul>
+<li>see the latest inspections, Form 483s and warning letters at a glance</li>
+<li>find which regulations are cited most, and where</li>
+<li>look up one company or facility and read its full history without leaving the page</li>
+</ul>
+<p>The pain points they named were the time spent moving between FDA sites, inconsistent data between sources, and no single view of recurring risk.</p>
+<hr />
+<h2>The data</h2>
+<p>Five sources, filtered to food-related records. Facilities are identified by the FDA's FEI number, which became the key that joins everything.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>How collected</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inspection classifications</td>
+<td>FDA API</td>
+<td>Outcome of each inspection: NAI, VAI or OAI</td>
+</tr>
+<tr>
+<td>Inspection citations</td>
+<td>FDA API</td>
+<td>Cited regulation (CFR code) and description</td>
+</tr>
+<tr>
+<td>Warning letters</td>
+<td>FDA API</td>
+<td>Enforcement actions and letter references</td>
+</tr>
+<tr>
+<td>Product recalls</td>
+<td>FDA API</td>
+<td>Recall reason, product, status</td>
+</tr>
+<tr>
+<td>Form 483s</td>
+<td>Manual export</td>
+<td>Inspector observations; no API exists</td>
+</tr>
+</tbody>
+</table></div>
+<p>After filtering to food, the cleaned data holds about 142,000 inspections across 74,000 facilities (fiscal years 2009–2025), about 37,600 recall records, 3,700 warning-letter actions, and 1,800 Form 483s.</p>
+<hr />
+<h2>From five sources to one table</h2>
+<p><img loading="lazy" alt="Data pipeline" src="../assets/ecolab-fda/charts/01-pipeline.png" /></p>
+<ol>
+<li><strong>Collect.</strong> One script per source pulls from the FDA APIs; the Form 483 export is a manual download, so the pipeline accepts it as an upload.</li>
+<li><strong>Clean.</strong> Standardize column names and types, drop columns that carry no signal (second address lines, product type where it was empty), and decide how to treat each missing field. Every decision was written down with its reason.</li>
+<li><strong>Merge.</strong> Join inspection classifications to citations on FEI number and inspection ID, and where both sides had a value (city, state), keep the non-null one.</li>
+<li><strong>Add links.</strong> Generate a link to the source warning letter for each warning-letter action: 3,489 of 3,669 actions carry one, so an analyst can open the original document in one click.</li>
+<li><strong>Make it refreshable.</strong> A small desktop app runs collection and cleaning end to end, so someone who doesn't write Python can update the data.</li>
+</ol>
+<p><strong>What I did here.</strong> I evaluated the existing ingestion method and listed its errors and open questions before a client meeting. I ran the first data-quality pass and exploratory analysis (in Python and DataRobot), made the keep/drop and missing-value calls with written rationale, reviewed the final cleaned set for duplicates, missing values and mismatched keys, and documented the cleaning pipeline so the dashboard builders could rely on it. I also researched public sources for company parent-subsidiary data. The finding was that naming is inconsistent across sources and coverage of private and international firms is thin, so I recommended against building it into the model.</p>
+<hr />
+<h2>The dashboard</h2>
+<p>Built in Tableau (the client's Power BI wasn't available during the project) with written steps for rebuilding it in Power BI using DAX. It has two levels: a landing page for the whole dataset, and a facility page for one site.</p>
+<p><strong>Landing page.</strong> Search by company, then refine by FEI number, with a date slider. It shows the latest inspection, 483 and warning letter, inspections from the last 7 days, the split by regulatory focus area, and a searchable table of every record. Two views answer "what and where":</p>
+<p><img loading="lazy" alt="Top 10 cited regulations in the dashboard" src="../assets/ecolab-fda/screens/01-dashboard-top-cfr.png" /></p>
+<p>Hovering a bar shows the full regulation text and the number of violations behind it.</p>
+<p><img loading="lazy" alt="State heatmap and top 10 states by inspection outcome" src="../assets/ecolab-fda/screens/02-dashboard-geography.png" /></p>
+<p>The map and the state ranking show where inspections concentrate and how outcomes (no action, voluntary action, official action) differ by state.</p>
+<p><strong>Facility page.</strong> Once a facility looks interesting, the user opens one page with its classification counts, number of inspections, warning letters and 483s, days since the last inspection, its most-cited regulations, and the types of observations cited. Facility name, address and ID are hidden in this screenshot.</p>
+<p><img loading="lazy" alt="Facility page" src="../assets/ecolab-fda/screens/04-dashboard-facility.png" /></p>
+<p><strong>Documents in one click.</strong> The bottom of the facility page lists the source records (inspections, warning letters, recalls, enforcement reports, 483s) with links to the original FDA documents, so nobody has to go back to the FDA sites to read them.</p>
+<p><img loading="lazy" alt="Warning-letter and recall document lists with links" src="../assets/ecolab-fda/screens/03-dashboard-documents.png" /></p>
+<hr />
+<h2>What the data shows</h2>
+<p>The charts below are redrawn from the cleaned data, with no firm names.</p>
+<p><strong>Most inspections end without action.</strong> Of about 142,000 inspections, 65% were classified NAI (no action), 32% VAI (voluntary action) and 3% OAI (official action). The OAI group is where enforcement starts, and it is small, so the repeat patterns matter more than the headline count.</p>
+<p><img loading="lazy" alt="Inspection outcomes" src="../assets/ecolab-fda/charts/02-outcomes.png" /></p>
+<p><strong>The most-cited rules are the ones a hygiene and pest-management company can address.</strong> Grouping the ten most-cited regulations by the service they relate to (my grouping), five of them concern sanitation or pest control, and those five account for 56% of the citation counts in the top ten. The single most-cited rule, with about 3,200 facilities, covers cleaning and sanitizing operations; the third covers insecticides and rodenticides.</p>
+<p><img loading="lazy" alt="Top cited regulations" src="../assets/ecolab-fda/charts/03-top-cfr.png" /></p>
+<p><strong>Activity is concentrated in a few states.</strong> California alone accounts for about 17,600 inspections, more than twice the next state, with New York, Texas and Florida following. New York and Florida show a higher share of VAI outcomes than most of the others. These counts are unique inspections from the final cleaned data; the dashboard screenshots above come from an earlier build that counts records, so their numbers differ.</p>
+<p><img loading="lazy" alt="Top states" src="../assets/ecolab-fda/charts/04-states.png" /></p>
+<hr />
+<h2>Limitations and handoff</h2>
+<ul>
+<li><strong>Entity matching is the weak spot.</strong> The same company appears under different legal names across FDA sources. FEI number fixes most of it, but parent-company roll-ups were not solved, because public hierarchy data is incomplete.</li>
+<li><strong>Scope is food only.</strong> Other FDA areas weren't included.</li>
+<li><strong>Citation counts are not risk scores.</strong> A rule being cited often says what is common, not which facility is the best prospect. The dashboard surfaces candidates; judging them still takes a person.</li>
+<li><strong>Form 483s are manual.</strong> The API doesn't cover them, so refreshing that table still needs a human step.</li>
+<li><strong>Handoff.</strong> The project closed with a written guide to the data pipeline, a per-chart explanation of the dashboard, a user persona and journey, and the steps for moving the visuals to Power BI.</li>
+</ul>
+<hr />
+<h2>What I'd build next</h2>
+<ul>
+<li>A facility-level score that combines repeat citations, recent OAI outcomes and days since last inspection, tested against which facilities the client already works with.</li>
+<li>A fuzzy-matching step on legal names and addresses to roll facilities up to parent companies where public data allows.</li>
+<li>A scheduled refresh in place of the manual run.</li>
+</ul>
+<hr />
+<h2>Skills demonstrated</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Where it shows up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stakeholder requirements</td>
+<td>Weekly client sessions turned into a persona, user journey and dashboard spec</td>
+</tr>
+<tr>
+<td>API data ingestion (Python)</td>
+<td>Four FDA APIs plus a manual 483 path, with one script per source</td>
+</tr>
+<tr>
+<td>Data cleaning &amp; merging</td>
+<td>Key-based joins on FEI and inspection ID, documented keep/drop and missing-value decisions</td>
+</tr>
+<tr>
+<td>Data quality assurance</td>
+<td>Final review for duplicates, missing values and key mismatches</td>
+</tr>
+<tr>
+<td>Entity resolution</td>
+<td>Naming inconsistencies across sources; hierarchy-data feasibility check</td>
+</tr>
+<tr>
+<td>Dashboard design (Tableau)</td>
+<td>Landing and facility pages, drill-down from national to facility level</td>
+</tr>
+<tr>
+<td>Business interpretation</td>
+<td>Mapping top-cited regulations to the client's service lines</td>
+</tr>
+<tr>
+<td>Documentation &amp; handoff</td>
+<td>Pipeline guide, dashboard guide, Power BI migration steps</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>Result</h2>
+<p>A working dashboard and a refreshable data pipeline handed over to the client's team, with documentation for maintaining and migrating it.</p>
+</div>
+<nav class="pager"><a href="pta-r-analytics.html">← Predictive Analytics in R</a><a href="genai-threat-radar.html">GenAI Threat Radar →</a></nav>
+</main>
+<footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
+<nav class="dock" aria-label="Sections">
+<a class="mark" href="../index.html" aria-label="Home">YW</a>
+<a href="../index.html#projects">Projects</a>
+<a class="hide-sm" href="../index.html#experience">Experience</a>
+<a class="btn primary small" href="../index.html#contact">Contact</a>
+</nav>
+<script src="../js/main.js" defer></script>
+</body>
+</html>

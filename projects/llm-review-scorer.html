@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM Review Scorer · Yifeng (Chloe) Wang</title>
+<meta name="description" content="An evaluation of whether an LLM can recover a 1–5 star rating from review text alone — and whether that is good enough to put in front of users.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="../css/style.css">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
+</head>
+<body>
+<header class="site-header"><div class="wrap bar">
+<a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
+<span class="top-note">Business · Data · Product</span>
+</div></header>
+<main class="wrap article">
+<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<p class="kicker reveal">AI · Evaluation</p>
+<h1 class="reveal" style="--d:.08s">LLM Review Scorer</h1>
+<div class="lead reveal" style="--d:.16s"><p>An evaluation of whether an LLM can recover a 1–5 star rating from review text alone — and whether that is good enough to put in front of users.</p>
+<p>Code, prompts, every cached model response and the figures below: <a href="https://github.com/YifengWang289/prompt-engineering-amazon-review-scorer">github.com/YifengWang289/prompt-engineering-amazon-review-scorer</a></p></div>
+<ul class="chips reveal" style="--d:.24s"><li>LLM evaluation</li><li>Prompt engineering</li><li>Error analysis</li><li>Experiment design</li><li>Python (pandas, scikit-learn)</li><li>Cost modeling</li></ul>
+<div class="prose">
+<h2>The problem</h2>
+<p>Most customer feedback arrives without a number. Support tickets, forum posts, social comments and video reviews all carry sentiment, but nothing a dashboard can average. A model that turns text into a 1–5 score would make that feedback comparable — if the scores can be trusted.</p>
+<p>An earlier version of this project showed the idea works: 50 reviews, a hand-written rubric with five annotated examples, mean absolute error of 0.53 stars. What it could not answer was the question that decides whether anything ships:</p>
+<p><strong>Is 0.53 good? Compared to what? Wrong in which direction? At what cost?</strong></p>
+<p>I rebuilt the project around those questions.</p>
+<hr />
+<h2>Defining "good" before measuring anything</h2>
+<p>Stars are ordinal, so being off by two is worse than being off by one. That rules out plain accuracy and makes <strong>mean absolute error</strong> the primary metric, reported alongside exact-match rate, the share within one star, and <strong>signed bias</strong> — the metric that says whether the model is systematically harsher or softer than real reviewers.</p>
+<p>Three things had to exist before any number meant anything.</p>
+<p><strong>A test set that can't be gamed.</strong> 500 held-out Amazon electronics reviews, 100 per star, sampled from a public 2023 dataset. A separate 150-review dev set for iteration and 2,000 training reviews for the non-LLM baselines. No review and no <em>product</em> appears in more than one split — without that, a model can recognize a product instead of reading the review.</p>
+<p><strong>Baselines.</strong> Always predict 3★. VADER, a rule-based sentiment scorer. TF-IDF plus ridge regression trained on the 2,000 labeled reviews. If an LLM can't beat a bag of words, it isn't earning its cost.</p>
+<p><strong>A human ceiling.</strong> I re-labeled 50 test reviews blind — no model output, no true stars — and scored myself the same way. This turned out to be the most important number in the project.</p>
+<hr />
+<h2>What the eval found</h2>
+<p>Five prompt versions, each adding one thing, all scored on the same 500 reviews.</p>
+<p><img loading="lazy" alt="Mean absolute error by method, with 95% confidence intervals" src="../assets/review-scorer/01-mae-by-method.png" /></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>MAE [95% CI]</th>
+<th>Exact</th>
+<th>±1 star</th>
+<th>Bias</th>
+<th>$/1k reviews</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Always predict 3★</td>
+<td>1.20 [1.13–1.27]</td>
+<td>20%</td>
+<td>60%</td>
+<td>+0.00</td>
+<td>—</td>
+</tr>
+<tr>
+<td>VADER sentiment</td>
+<td>0.97 [0.89–1.05]</td>
+<td>34%</td>
+<td>77%</td>
+<td>−0.08</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TF-IDF + ridge</td>
+<td>0.80 [0.74–0.86]</td>
+<td>33%</td>
+<td>87%</td>
+<td>−0.03</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>v0 · one-line prompt</strong></td>
+<td><strong>0.39 [0.34–0.44]</strong></td>
+<td>65%</td>
+<td>96%</td>
+<td>−0.24</td>
+<td><strong>$0.048</strong></td>
+</tr>
+<tr>
+<td>v1 · + sentiment rubric</td>
+<td>0.50 [0.45–0.55]</td>
+<td>55%</td>
+<td>95%</td>
+<td>−0.28</td>
+<td>$0.180</td>
+</tr>
+<tr>
+<td>v2 · + five annotated examples</td>
+<td>0.52 [0.47–0.57]</td>
+<td>52%</td>
+<td>96%</td>
+<td>−0.29</td>
+<td>$0.517</td>
+</tr>
+<tr>
+<td>v3 · satisfaction rubric</td>
+<td>0.44 [0.39–0.49]</td>
+<td>61%</td>
+<td>96%</td>
+<td>−0.19</td>
+<td>$0.189</td>
+</tr>
+<tr>
+<td>v4 · anchored, from error analysis</td>
+<td>0.41 [0.36–0.46]</td>
+<td>63%</td>
+<td>97%</td>
+<td>−0.15</td>
+<td>$0.157</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The elaborate prompt lost to a one-line prompt.</strong> v2 is the carefully built artifact — a five-level rubric plus five worked examples with explanations. v0 is one sentence: <em>"Predict the star rating this customer gave."</em> v0 wins by 0.12 MAE, a gap that survives a paired bootstrap on identical reviews (95% CI [−0.17, −0.08]), and costs a tenth as much per review. The long prompt also hit the API's input-token rate limit mid-run — a throughput cost on top of the price.</p>
+<p>The rubric was not neutral. It described the scale in terms of <em>emotional intensity</em> — "angry", "enthusiastic", "full of praise" — and the model scored tone instead of satisfaction. Every rubric version is more biased than no rubric at all.</p>
+<hr />
+<h2>Where it fails</h2>
+<p>Errors run one direction and sit in the middle of the scale: <strong>the model is harsher than the people who wrote the reviews.</strong></p>
+<p><img loading="lazy" alt="Mean signed error by true star rating" src="../assets/review-scorer/02-bias-by-star.png" /></p>
+<p>3★ reviews are the worst case — predicted correctly 40% of the time, pushed down to 2★ in another 40%.</p>
+<p><img loading="lazy" alt="Confusion matrix for the final prompt version" src="../assets/review-scorer/03-confusion-v4.png" /></p>
+<p>The failure is legible in the text. A reviewer writes <em>"doesn't move enough air to clear debris, wish I'd gone for the larger size"</em> and gives it 3 stars. The model reads a named defect and scores dissatisfaction. People use the middle of the scale for "fine, with a real caveat"; the model treats any concrete complaint as a complaint.</p>
+<p><strong>Fixing the pattern worked, but not by much.</strong> v4 is v0 plus three anchor lines written directly from the dev-set errors — <em>a review naming a flaw without anger is usually a 3, not a 2</em>. It cut bias from −0.24 to −0.15 and raised exact matches to 63%, the best of any version. But against the one-line prompt the difference is inside the noise (ΔMAE +0.015, CI [−0.021, +0.052]). Reporting that honestly matters more than claiming the win.</p>
+<hr />
+<h2>Is it good enough?</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>MAE</th>
+<th>Exact</th>
+<th>±1 star</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Me, re-labeling 50 reviews blind</td>
+<td>0.48</td>
+<td>58%</td>
+<td>94%</td>
+</tr>
+<tr>
+<td>v4 on those same 50</td>
+<td><strong>0.46</strong></td>
+<td>60%</td>
+<td>96%</td>
+</tr>
+<tr>
+<td>v0 on those same 50</td>
+<td>0.54</td>
+<td>56%</td>
+<td>92%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The model matches a careful human. That sounds like a finish line; it is closer to a warning. <strong>Star ratings are noisy labels</strong> — they record what someone clicked, not what the text says. One test review is titled <em>"Doesn't work with SJ6 Legend"</em>, says the product does not work, and carries <strong>5 stars</strong>. Nothing recovers that, and chasing it means fitting noise.</p>
+<p>So the human ceiling changed what I did next. Further prompt tuning had nowhere to go. The remaining question was no longer accuracy but <strong>operating policy</strong>.</p>
+<hr />
+<h2>Shipping shape</h2>
+<p>The model reports its own confidence with each score. It is not well calibrated — it said <code>low</code> exactly once in 500 reviews — but it does separate signal: the 27% it marks <code>high</code> score at MAE 0.20 and 83% exact, against 0.49 for the rest. Combined with disagreement across repeated runs, that gives a coverage curve rather than a single number.</p>
+<p><img loading="lazy" alt="Error on auto-handled reviews against automation coverage" src="../assets/review-scorer/04-routing-curve.png" /></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Auto-handled</th>
+<th>MAE on auto</th>
+<th>Exact</th>
+<th>Human reviews / 1k</th>
+<th>Cost / 1k</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15%</td>
+<td>0.16</td>
+<td>88%</td>
+<td>850</td>
+<td>$85.16</td>
+</tr>
+<tr>
+<td>45%</td>
+<td>0.29</td>
+<td>73%</td>
+<td>550</td>
+<td>$55.16</td>
+</tr>
+<tr>
+<td>75%</td>
+<td>0.36</td>
+<td>67%</td>
+<td>250</td>
+<td>$25.16</td>
+</tr>
+<tr>
+<td>100%</td>
+<td>0.41</td>
+<td>58%</td>
+<td>0</td>
+<td>$0.16</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>(Manual review priced at $0.10 each — a stated assumption, not a measurement.)</em></p>
+<p><strong>Recommendation: ship it for aggregate trends, not for single reviews.</strong> Averaged over hundreds of reviews the bias is a constant that calibration removes, and $0.16 per 1,000 reviews makes coverage of previously unmeasurable channels nearly free. On a single review the model is wrong about a third of the time and wrong in a predictable direction — a 3★ experience shown to a seller as 2★ is a complaint, not a feature. If single-review scores are required, automate the most-certain 45% at MAE 0.29 and route the rest to a person.</p>
+<p><strong>Before any of this ships:</strong> the 500-review set becomes a regression test. Every prompt change and every model upgrade re-runs it, and the numbers above are the bar.</p>
+<hr />
+<h2>What these numbers can't support</h2>
+<p>The recommendation rests on a claim the eval does not actually test. "Good enough for aggregate trends" is about <em>averages over a product</em> — how close the mean predicted rating sits to the mean true rating — and that is a different measurement from per-review MAE. A constant bias of −0.15 may cancel out across hundreds of reviews or may not, depending on how the errors correlate with product type. Measuring it directly is the next thing I would do, and until it exists the recommendation is an inference, not a result.</p>
+<p>Two narrower limits: the eval covers electronics only, where reviews are unusually technical and specific; and the model's confidence, which the routing curve depends on, is not calibrated enough to carry that weight.</p>
+<p><em>The original notebook's RMSE line took the square root of the mean absolute error, printing 0.728 where the true value is 0.91; the notebook now carries the fix and a note, and its MAE of 0.53 was correct. The rebuilt eval runs on a different model, so it does not reproduce that run bit-for-bit — current models reject the <code>temperature</code> parameter, so run-to-run variation is measured rather than suppressed.</em></p>
+<hr />
+<h2>Skills demonstrated</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Experiment design</strong></td>
+<td>Dev/test/train splits with no review or product crossing between them; prompts frozen before the test set was touched</td>
+</tr>
+<tr>
+<td><strong>Statistical honesty</strong></td>
+<td>Bootstrap CIs on every metric; paired bootstrap for version comparisons; reporting that my best prompt's win was inside the noise</td>
+</tr>
+<tr>
+<td><strong>Prompt engineering</strong></td>
+<td>Five versions isolating one change each; structured JSON output replacing regex parsing of free text</td>
+</tr>
+<tr>
+<td><strong>Error analysis</strong></td>
+<td>Failure concentrated to 3★ and to one direction; a targeted fix written from the error sheet and re-measured</td>
+</tr>
+<tr>
+<td><strong>Measurement design</strong></td>
+<td>A blind human baseline that reframed the goal from "improve accuracy" to "decide an operating policy"</td>
+</tr>
+<tr>
+<td><strong>Product judgment</strong></td>
+<td>A ship/no-ship recommendation split by use case, with a coverage-vs-cost curve instead of a single accuracy claim</td>
+</tr>
+<tr>
+<td><strong>Cost modeling</strong></td>
+<td>Per-1,000-review cost for every version; the finding that the best prompt was also the cheapest</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>The takeaway</h2>
+<p>A hand-written rubric is an assumption about how a task works. This one said the job was reading emotional intensity, the model did exactly that, and every version carrying the rubric scored worse than one sentence of plain instruction — at ten times the cost.</p>
+<p>The assumption was reasonable when it was written and wrong a year later, and nothing about writing a better prompt would have revealed that. Only the eval did. The durable asset from this project is not the prompt, which a model upgrade can make obsolete overnight; it is the 500-review test set that tells me, in an afternoon, whether the upgrade helped.</p>
+<hr />
+</div>
+<nav class="pager"><a href="portfolio-optimizer.html">← Portfolio Optimizer</a><a href="notion-voice-ai.html">Notion Voice AI →</a></nav>
+</main>
+<footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
+<nav class="dock" aria-label="Sections">
+<a class="mark" href="../index.html" aria-label="Home">YW</a>
+<a href="../index.html#projects">Projects</a>
+<a class="hide-sm" href="../index.html#experience">Experience</a>
+<a class="btn primary small" href="../index.html#contact">Contact</a>
+</nav>
+<script src="../js/main.js" defer></script>
+</body>
+</html>
