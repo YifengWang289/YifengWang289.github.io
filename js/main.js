@@ -1,17 +1,26 @@
-// 1) Project filter: buttons toggle cards by data-tags. Works without JS (all cards visible).
+// 1) Project picker: hover or click a category on the left to swap the projects on the right.
 (function () {
-  var buttons = document.querySelectorAll('.filters button');
-  var cards = document.querySelectorAll('#project-grid .card');
-  buttons.forEach(function (b) {
-    b.addEventListener('click', function () {
-      var f = b.getAttribute('data-filter');
-      buttons.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      cards.forEach(function (c) {
-        var tags = (c.getAttribute('data-tags') || '').split(' ');
-        c.hidden = !(f === 'all' || tags.indexOf(f) !== -1);
-      });
+  var tabs = document.querySelectorAll('.cats [role="tab"]');
+  if (!tabs.length) return;
+  function select(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      var p = document.getElementById(t.getAttribute('aria-controls'));
+      if (p) { p.hidden = !on; if (on) { var g = p.querySelector('.grid'); if (g) g.scrollLeft = 0; } }
+    });
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { select(t); });
+    t.addEventListener('mouseenter', function () { if (matchMedia('(hover:hover)').matches) select(t); });
+    t.addEventListener('keydown', function (e) {
+      var i = Array.prototype.indexOf.call(tabs, t), n = null;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (n) { e.preventDefault(); n.focus(); select(n); }
     });
   });
+  select(tabs[0]);
 })();
 
 // 2) Scroll reveal: fade-up once when an element enters the viewport. Without JS everything stays visible.
