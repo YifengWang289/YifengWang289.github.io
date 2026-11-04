@@ -214,8 +214,12 @@ a.card:hover .more::after{transform:translateX(5px)}
 .gallery::after{content:"";flex:0 0 1px}
 @media(min-width:900px){.article{max-width:840px}}
 
-/* in-progress project */
-.badge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--warm) 16%,transparent);color:var(--warm);margin-left:8px;vertical-align:middle}
-.card .thumb.empty span{font-weight:650;letter-spacing:-.01em}
-.card .thumb.empty{display:grid;place-items:center;color:var(--muted);font-size:15px}
+/* in-progress project: visible but not clickable */
+.card.coming{cursor:default}
+.card.coming .thumb.empty{display:grid;place-items:center;background:var(--tint);
+  background-image:repeating-linear-gradient(135deg,transparent 0 11px,color-mix(in srgb,var(--line) 70%,transparent) 11px 12px)}
+.card.coming .thumb.empty span{font:italic 400 clamp(28px,3.4vw,38px)/1 var(--serif);color:var(--muted);
+  background:var(--bg);padding:10px 22px;border-radius:999px;box-shadow:var(--shadow-soft)}
+.card.coming h3,.card.coming p{opacity:.7}
+.card .more.soon{color:var(--muted);font-weight:400}
+.card .more.soon::after{content:none}
