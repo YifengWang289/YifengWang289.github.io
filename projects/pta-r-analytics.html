@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>Predictive Analytics in R · Yifeng (Chloe) Wang</title>
-<meta name="description" content="Three analyses in R for an electronics retailer weighing a partnership and an acquisition: which brand a customer prefers, how much a new product will sell, and what a competitor&#x27;s shoppers buy togeth">
+<meta name="description" content="Three analyses in R for an electronics retailer weighing a partnership and an acquisition: which brand a customer prefers, how much a new product will sell, and what a competitor&#x27;s shoppers buy together.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
 <link rel="stylesheet" href="../css/style.css">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 <header class="site-header"><div class="wrap bar">
 <a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
 <span class="top-note">Business · Data · Product</span>
 </div></header>
-<main class="wrap article">
-<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<main id="main" class="wrap article">
+<p class="back"><a href="../index.html#projects"><span aria-hidden="true">←</span> All Projects</a></p>
 <p class="kicker reveal">Data · ML</p>
 <h1 class="reveal" style="--d:.08s">Predictive Analytics in R</h1>
 <div class="lead reveal" style="--d:.16s"><p>Three analyses in R for an electronics retailer weighing a partnership and an acquisition: which brand a customer prefers, how much a new product will sell, and what a competitor's shoppers buy together. Each ends in a recommendation and a clear statement of what the data can't support.</p></div>
@@ -60,8 +62,8 @@
 - Both models land at the same place: <strong>92.5% (C5.0) and 92.3% (RF) on the hold-out set</strong>, against 62.2% for always guessing Sony. I chose RF for its slightly higher CV accuracy (92.1% vs 91.7%); the gap is within noise.
 - <strong>Salary and age carry almost everything.</strong> Credit is a distant third. Education, car and zip code add close to nothing, so those survey questions can be dropped.
 - The relationship is not a straight line. Sony preference swings between ~0% and ~100% in alternating salary-age bands (for example, 100% for under-$40K aged 20–40, but 5% for $60–80K aged 20–40). That's why a tree-based model fits so much better than a linear one would.</p>
-<p><img loading="lazy" alt="Variable importance" src="../assets/pta-r-analytics/charts/brand-01-variable-importance.png" />
-<img loading="lazy" alt="Sony preference by salary and age" src="../assets/pta-r-analytics/charts/brand-02-salary-age-heatmap.png" /></p>
+<p><img loading="lazy" alt="Variable importance" src="../assets/pta-r-analytics/charts/brand-01-variable-importance.png" width="1400" height="800" />
+<img loading="lazy" alt="Sony preference by salary and age" src="../assets/pta-r-analytics/charts/brand-02-salary-age-heatmap.png" width="1400" height="800" /></p>
 <p><strong>Result on the 5,000 unlabelled responses:</strong> 3,108 predicted Sony (62%) and 1,892 Acer (38%), matching the split in the labelled data.</p>
 <p><strong>Recommendation.</strong> Pursue a deeper relationship with Sony, and cut the survey down to salary and age plus anything new worth testing.</p>
 <p><strong>Limits.</strong> Only two brands, so this says nothing about a third option. And the segments are sharp enough that I'd want to confirm they're real behaviour, not an artifact of how the survey data was generated.</p>
@@ -105,8 +107,8 @@
 </tbody>
 </table></div>
 <p>SVM has a slightly lower RMSE, but the gap is small against a noisy 80-row dataset, and it forecasts negative sales for two products. I chose the Random Forest: the only model with no negative forecasts. Anyone using the output would trust a model that can't predict impossible numbers.</p>
-<p><img loading="lazy" alt="Correlation matrix" src="../assets/pta-r-analytics/charts/sales-01-correlation.png" />
-<img loading="lazy" alt="Drivers of predicted volume" src="../assets/pta-r-analytics/charts/sales-02-variable-importance.png" /></p>
+<p><img loading="lazy" alt="Correlation matrix" src="../assets/pta-r-analytics/charts/sales-01-correlation.png" width="1800" height="1500" />
+<img loading="lazy" alt="Drivers of predicted volume" src="../assets/pta-r-analytics/charts/sales-02-variable-importance.png" width="1400" height="800" /></p>
 <p><strong>What the forecast shows.</strong> Multiplying predicted units by price and margin gives:</p>
 <div class="table-scroll"><table>
 <thead>
@@ -139,7 +141,7 @@
 </tr>
 </tbody>
 </table></div>
-<p><img loading="lazy" alt="Volume is not profit" src="../assets/pta-r-analytics/charts/sales-03-volume-vs-profit.png" /></p>
+<p><img loading="lazy" alt="Volume is not profit" src="../assets/pta-r-analytics/charts/sales-03-volume-vs-profit.png" width="1400" height="800" /></p>
 <p>The best-selling item is a netbook (~1,360 units, ~$447K revenue). The most profitable is a PC (~391 units, ~$68K profit): high price and margin on modest volume.</p>
 <p><strong>Recommendation.</strong> Put the focus on PCs, which make the most profit per unit sold, and read netbook and smartphone volume as traffic, not profit.</p>
 <p><strong>Limits.</strong> 80 products is a small sample, and the hold-out slice is only 20 products, so I rely on repeated cross-validation, not a single split. A typical forecast is off by ~700 units, large for low-volume products. I'd treat these as rankings of products, not exact unit forecasts.</p>
@@ -152,8 +154,8 @@
 - <strong>Large baskets:</strong> the median basket has 3 items and 38% have five or more. That's unusually large for consumer retail.
 - <strong>Strongest rules (support ≥ 1%):</strong> a monitor plus a desktop or laptop predicts an HP Laptop or iMac with 50–64% confidence and lift 2.0–2.5. For example, {Acer Aspire, ViewSonic Monitor} → HP Laptop at 60% confidence (lift 2.5).
 - <strong>Stricter thresholds:</strong> rules above 85% confidence only exist at very low support (0.15%, 15–37 transactions each). They are real but too thin to plan around.</p>
-<p><img loading="lazy" alt="Top items" src="../assets/pta-r-analytics/charts/basket-01-top-items.png" />
-<img loading="lazy" alt="Rules: support vs confidence" src="../assets/pta-r-analytics/charts/basket-02-rules-scatter.png" /></p>
+<p><img loading="lazy" alt="Top items" src="../assets/pta-r-analytics/charts/basket-01-top-items.png" width="1600" height="900" />
+<img loading="lazy" alt="Rules: support vs confidence" src="../assets/pta-r-analytics/charts/basket-02-rules-scatter.png" width="1600" height="1000" /></p>
 <p><strong>Interpretation.</strong> Big baskets of computers and monitors suggest business buyers outfitting offices, so an acquisition could open a B2B channel. This is an inference from basket shape. The data has no customer type field, so confirming it would need account-level data.</p>
 <p><strong>Recommendation.</strong> Treat B2B as the main reason to look closer. Before committing, get customer-segment data to confirm it. Rules like these also support store layout, bundles and cross-sell emails.</p>
 <p><strong>Limits.</strong> Many overlapping rules make it hard to pick the important ones. Lift tells you the association is real, but with 22% single-item baskets and a few dominant items, high support is partly just popularity.</p>
@@ -218,7 +220,7 @@
 <li><a href="../assets/pta-r-analytics/code/03_market_basket.R"><code>03_market_basket.R</code></a>: Apriori rules</li>
 </ul>
 </div>
-<nav class="pager"><a href="notion-voice-ai.html">← Notion Voice AI</a><a href="balancepoint.html">BalancePoint →</a></nav>
+<nav class="pager" aria-label="Previous and next project"><a href="notion-voice-ai.html"><span aria-hidden="true">←</span> Notion Voice AI</a><a href="balancepoint.html">BalancePoint <span aria-hidden="true">→</span></a></nav>
 </main>
 <footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
 <nav class="dock" aria-label="Sections">

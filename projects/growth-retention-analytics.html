@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>Growth & Retention Analytics · Yifeng (Chloe) Wang</title>
-<meta name="description" content="A growth analysis for a consumer online-learning subscription app that was spending more to acquire learners while losing paying ones a few months in. I defined the metrics, measured the funnel and ch">
+<meta name="description" content="A growth analysis for a consumer online-learning subscription app that was spending more to acquire learners while losing paying ones a few months in.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
 <link rel="stylesheet" href="../css/style.css">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 <header class="site-header"><div class="wrap bar">
 <a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
 <span class="top-note">Business · Data · Product</span>
 </div></header>
-<main class="wrap article">
-<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<main id="main" class="wrap article">
+<p class="back"><a href="../index.html#projects"><span aria-hidden="true">←</span> All Projects</a></p>
 <p class="kicker reveal">Data · Marketing analytics</p>
 <h1 class="reveal" style="--d:.08s">Growth & Retention Analytics</h1>
 <div class="lead reveal" style="--d:.16s"><p>A growth analysis for a consumer online-learning subscription app that was spending more to acquire learners while losing paying ones a few months in. I defined the metrics, measured the funnel and channel economics, built the data models in dbt, built and stress-tested a churn model, read a win-back experiment, and turned it into a budget and retention decision.</p></div>
@@ -64,9 +66,9 @@
 </tr>
 </tbody>
 </table></div>
-<h3>How the work fit together</h3>
-<p><img loading="lazy" alt="End-to-end workflow" src="../assets/growth-retention-analytics/charts/00-workflow.png" /></p>
-<p><img loading="lazy" alt="Executive view rendered from the marts" src="../assets/growth-retention-analytics/charts/13-dashboard.png" /></p>
+<h2>How the work fit together</h2>
+<p><img loading="lazy" alt="End-to-end workflow" src="../assets/growth-retention-analytics/charts/00-workflow.png" width="1483" height="636" /></p>
+<p><img loading="lazy" alt="Executive view rendered from the marts" src="../assets/growth-retention-analytics/charts/13-dashboard.png" width="2083" height="1536" /></p>
 <hr />
 <h2>1 · The ask, and what it really meant</h2>
 <p>The VP of Growth wrote one email with two worries: paid acquisition keeps getting more expensive, and paying learners cancel a few months in. Hunches on the table were that paid social is underwater and that low-engagement learners churn, neither proven. She wanted four things: where the funnel leaks, which channels are worth the spend, who is about to churn, and something she could look at herself instead of a monthly deck.</p>
@@ -224,7 +226,7 @@
 </tr>
 </tbody>
 </table></div>
-<p><img loading="lazy" alt="Same data, different answers" src="../assets/growth-retention-analytics/charts/06-metric-definitions.png" /></p>
+<p><img loading="lazy" alt="Same data, different answers" src="../assets/growth-retention-analytics/charts/06-metric-definitions.png" width="1808" height="636" /></p>
 <p>The 46.5% matters because LTV is ARPU ÷ monthly churn: plugging in the cumulative number values a subscriber at a tenth of the truth. CAC and LTV:CAC are always reported by channel, since a blended CAC of about $73 hides a range from $39 to $104. Every rate is sum-first-then-divide, and retention uses each subscription's observation window so a two-month-old subscription is never counted against 12-month retention.</p>
 <p><strong>The metric dictionary</strong> (one pinned row per metric, so anyone can write the SQL without asking me):</p>
 <div class="table-scroll"><table>
@@ -295,7 +297,7 @@
 </table></div>
 <p><strong>The data.</strong> Twelve tables on Databricks: 80,000 learners, 3,761 paid subscriptions (the churn label), a 553K-row learner-by-month engagement panel, 132K course enrolments, ~283K GA4-style funnel events, 136K support tickets, campaign and channel-by-month spend, a course catalogue and reference dimensions. Everything joins on <code>learner_id</code>; funnel events carry a null learner for anonymous visitors, and <code>sign_up</code> is the seam where a visitor becomes a learner. Plans are monthly ($11.90) or annual ($7.90 a month, prepaid). The work ran in Databricks: SQL in the SQL editor, the Python work (segmentation, model, experiment, scoring) in notebooks on serverless compute, and the dbt project through the <code>dbt-databricks</code> adapter into my own schema.</p>
 <h2>3 · Funnel and channel economics</h2>
-<p><img loading="lazy" alt="Funnel" src="../assets/growth-retention-analytics/charts/01-funnel.png" /></p>
+<p><img loading="lazy" alt="Funnel" src="../assets/growth-retention-analytics/charts/01-funnel.png" width="1285" height="570" /></p>
 <p>The biggest leak is sign-up to activation: half of learners never finish a first lesson, and activation varies by channel from 55% (organic) and 51% (affiliate) to 46% for paid social, so the channel that costs the most also activates the least. Free-to-paid conversion by channel runs from organic (5.6%) and paid search (5.3%) down to paid social (3.8%); by age, 35–44 converts best (5.2%) and 18–24 worst (4.2%).</p>
 <p>Conversion alone points at the wrong channels, because it ignores cost. Joining spend (about $211K across the paid channels over 30 months) to the subscription outcome gives the number that decides the budget:</p>
 <div class="table-scroll"><table>
@@ -334,11 +336,11 @@
 </tr>
 </tbody>
 </table></div>
-<p><img loading="lazy" alt="LTV:CAC by channel" src="../assets/growth-retention-analytics/charts/02-ltv-cac-by-channel.png" /></p>
-<p><img loading="lazy" alt="Conversion versus economics" src="../assets/growth-retention-analytics/charts/11-conversion-vs-economics.png" /></p>
+<p><img loading="lazy" alt="LTV:CAC by channel" src="../assets/growth-retention-analytics/charts/02-ltv-cac-by-channel.png" width="1182" height="626" /></p>
+<p><img loading="lazy" alt="Conversion versus economics" src="../assets/growth-retention-analytics/charts/11-conversion-vs-economics.png" width="1228" height="727" /></p>
 <p>Paid search converts best among paid channels, but affiliate returns a paying learner for $38.50 and clears the 3:1 bar comfortably, while paid social spends about $104 to win a subscriber worth roughly $204. Neither the funnel (which stops at sign-up) nor the spend table (which doesn't know who paid) shows this alone; the join is the analysis.</p>
 <p>The query behind it joins two grains deliberately, spend per channel and subscription outcome per channel, rather than letting a BI tool fan the joins out:</p>
-<pre><code class="language-sql">WITH spend AS (
+<pre tabindex="0"><code class="language-sql">WITH spend AS (
   SELECT channel, sum(spend_usd) AS spend FROM channel_spend GROUP BY channel
 ), subs AS (
   SELECT l.acquisition_channel AS channel, count(*) AS subs,
@@ -356,7 +358,7 @@ ORDER BY ltv_cac DESC;
 </code></pre>
 <p>Organic has no spend, so the join drops it, which is the correct behaviour: it is unpaid, not free to evaluate.</p>
 <h2>4 · Retention: who leaves and when</h2>
-<p><img loading="lazy" alt="Retention curve and churn by engagement" src="../assets/growth-retention-analytics/charts/03-retention-and-engagement.png" /></p>
+<p><img loading="lazy" alt="Retention curve and churn by engagement" src="../assets/growth-retention-analytics/charts/03-retention-and-engagement.png" width="1741" height="636" /></p>
 <p>Retention falls from 92% at month 1 to 81%, 68%, 59%, 52% and 41% at months 3, 6, 9, 12 and 18, a normal consumer-subscription shape. Churn falls steadily as average engagement rises, from 57% in the least-engaged quartile to 38% in the most engaged. Annual plans cancel at roughly half the rate of monthly ones (28% vs 53%).</p>
 <div class="table-scroll"><table>
 <thead>
@@ -387,7 +389,7 @@ ORDER BY ltv_cac DESC;
 <p>Region barely matters (45–49% across all four), and I reported it as a non-driver rather than dress up noise. The two big, actionable levers are engagement and plan. One caution I'll come back to: this engagement figure averages each learner's whole history, so it describes who churns rather than predicting who will, and the modelling section shows how much weaker the early signal is.</p>
 <p>Cancellations have climbed from under 40 a month in early 2024 to about 90, while new subscriptions hold at roughly 110–150, so net growth is narrowing. With about 130 adds a month and 4.5% monthly churn, the base converges towards roughly 2,900 active subscribers unless retention or acquisition changes.</p>
 <p>To turn "low engagement churns" into something Product can act on, I clustered the 3,761 paying learners with k-means. Clustering is unsupervised, so it never sees the churn label: it finds whole-person groups, and I read each group's churn rate afterwards. Features were plan, average sessions, active days, streak, lessons completed and support tickets. I left tenure out on purpose, because for a cancelled subscription it is the time to cancel, which would smuggle the outcome into the clusters, and I standardised the rest, otherwise lesson count swamps every distance. Silhouette favours the coarsest split (k = 2, 0.32) over k = 4 (0.25); I chose four because four lifecycle flows is a number a team can run and the groups behave differently, but I wouldn't claim the data forces four.</p>
-<p><img loading="lazy" alt="Personas" src="../assets/growth-retention-analytics/charts/08-personas.png" /></p>
+<p><img loading="lazy" alt="Personas" src="../assets/growth-retention-analytics/charts/08-personas.png" width="1576" height="626" /></p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -422,7 +424,7 @@ ORDER BY ltv_cac DESC;
 <p>The result I didn't expect is that the heaviest users on a monthly plan still cancel at 44%, against 26% for annuals with similar engagement. Plan is a bigger lever than usage, which is why the annual-upgrade nudge sits at the top of the action list later.</p>
 <h2>5 · A tested data layer in dbt</h2>
 <p>The funnel, channel-economics and churn-training queries had become a pile of overlapping SQL, so I moved them into a dbt project so each metric is defined once.</p>
-<p><img loading="lazy" alt="dbt lineage" src="../assets/growth-retention-analytics/charts/05-dbt-lineage.png" /></p>
+<p><img loading="lazy" alt="dbt lineage" src="../assets/growth-retention-analytics/charts/05-dbt-lineage.png" width="1483" height="675" /></p>
 <ul>
 <li><strong>Staging:</strong> seven views, one per source table.</li>
 <li><strong>Marts:</strong> <code>dim_learner</code>; <code>fct_funnel</code> (one row per learner with sign-up, activation and paid flags); <code>fct_subscription</code> (the churn-model grain, one row per subscription); and <code>mart_channel_economics</code> (CAC, ROAS and LTV:CAC by channel, using a cost-per-session seed).</li>
@@ -431,7 +433,7 @@ ORDER BY ltv_cac DESC;
 </ul>
 <p>The channel mart reproduces the SQL results exactly: affiliate $38.50 CAC and 5.25 LTV:CAC, paid social $104.32 and 1.94. The funnel mart reproduces 80,000 sign-ups, 39,511 activated and 3,761 paid.</p>
 <p>The channel-economics mart is the same query as above, now defined once and reusable by any dashboard:</p>
-<pre><code class="language-sql">-- models/marts/mart_channel_economics.sql  (spend and subs CTEs as in the query above)
+<pre tabindex="0"><code class="language-sql">-- models/marts/mart_channel_economics.sql  (spend and subs CTEs as in the query above)
 select sp.channel, sp.spend, su.subs,
        round(sp.spend / su.subs, 2)                        as cac,
        round(su.rev_to_date / sp.spend, 2)                 as roas_to_date,
@@ -445,7 +447,7 @@ left join {{ ref('ref_acq_cost') }} seed on seed.channel = sp.channel
 <p><code>fct_subscription</code> carries whole-history engagement as a convenience for reporting; the churn model rebuilds those features point-in-time, which is where the next section starts.</p>
 <h2>6 · Churn model: two leaks, one honest number</h2>
 <p>Averaging a subscriber's engagement over their whole history makes churners look inactive because they already left. So I fixed the prediction point at the end of month 3 and built every feature from months 0–2 only: sessions, streak, support tickets, plan, price and channel. Anything later, plus the cancel date, tenure and status, was banned. The rule lives in the join itself:</p>
-<pre><code class="language-sql">WITH early_eng AS (            -- engagement over the FIRST 3 months of the subscription only
+<pre tabindex="0"><code class="language-sql">WITH early_eng AS (            -- engagement over the FIRST 3 months of the subscription only
   SELECT s.subscription_id,
          avg(a.sessions) AS sessions_m0_3, avg(a.streak_days_max) AS streak_m0_3,
          avg(a.active_days) AS active_days_m0_3, sum(a.lessons_completed) AS lessons_m0_3
@@ -459,7 +461,7 @@ left join {{ ref('ref_acq_cost') }} seed on seed.channel = sp.channel
 </code></pre>
 <p><strong>The first version looked good, and the number was wrong.</strong> I trained on every subscription observed for at least 3 months (3,352 rows, 51.5% churned). It scored ROC-AUC 0.70, and the top risk decile churned at 99.4%. That is too good. Looking at who sat in that decile, 463 of the 3,352 had cancelled in months 1 or 2 and every one of them was labelled as churn. They had left before the prediction point, and because activity rows only exist while someone is subscribed, a learner with no early activity was simply someone who had already gone. The features were technically time-bounded and still carried the answer.</p>
 <p>I rebuilt the population to what the business question actually is: subscribers <strong>still subscribed at the end of month 3</strong>, predicting who cancels afterwards. That removes 639 subscriptions (the 463, plus 176 who cancelled in month 3), leaving 2,713 with a 40% base rate.</p>
-<p><img loading="lazy" alt="What leakage does to the headline metric" src="../assets/growth-retention-analytics/charts/09-model-honesty.png" /></p>
+<p><img loading="lazy" alt="What leakage does to the headline metric" src="../assets/growth-retention-analytics/charts/09-model-honesty.png" width="1880" height="727" /></p>
 <ul>
 <li><strong>Evaluation:</strong> 5-fold stratified cross-validation, scoring every row out-of-fold so no subscriber is scored by a model that trained on them.</li>
 <li><strong>Result:</strong> ROC-AUC <strong>0.64</strong> (folds 0.62–0.67), PR-AUC 0.52 against a 0.40 baseline. Scoring the same rows in-sample gives 0.79, which is why the handoff uses out-of-fold scores.</li>
@@ -468,7 +470,7 @@ left join {{ ref('ref_acq_cost') }} seed on seed.channel = sp.channel
 <li><strong>Why not accuracy:</strong> the job is to rank subscribers for a limited win-back budget, not to label each one, so I report ROC-AUC, PR-AUC and lift, and set the threshold from the budget. At the top 20% by risk, precision is 57% against the 40% base, and it catches 29% of churners.</li>
 </ul>
 <p>Permutation importance (drop in ROC-AUC when a feature is shuffled) put price, i.e. plan, first (0.080), then channel (0.027) and early sessions (0.020), with streak and tickets near zero. That agrees with the retention analysis on plan and channel and says early usage matters less than I expected.</p>
-<p><img loading="lazy" alt="Lift by decile" src="../assets/growth-retention-analytics/charts/10-lift-by-decile.png" /></p>
+<p><img loading="lazy" alt="Lift by decile" src="../assets/growth-retention-analytics/charts/10-lift-by-decile.png" width="1303" height="661" /></p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -515,7 +517,7 @@ left join {{ ref('ref_acq_cost') }} seed on seed.channel = sp.channel
 - <strong>Guardrails:</strong> offer margin, since a discount costs money on every treated subscriber including those who would have stayed, and cannibalisation.
 - <strong>Discipline:</strong> population, arms, metric, window and significance threshold locked before launch, with a fixed sample size and stop date so there is no peeking.</p>
 <p><strong>Result.</strong> I sized the test first: detecting a 5-pp reduction (47% to 42%) at 80% power and α = 0.05 needs about 1,550 subscribers per arm (a 2-pp effect would need about 9,750).</p>
-<p><img loading="lazy" alt="Win-back result and economics" src="../assets/growth-retention-analytics/charts/04-winback-ab-and-economics.png" /></p>
+<p><img loading="lazy" alt="Win-back result and economics" src="../assets/growth-retention-analytics/charts/04-winback-ab-and-economics.png" width="1741" height="638" /></p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -543,11 +545,11 @@ left join {{ ref('ref_acq_cost') }} seed on seed.channel = sp.channel
 <p>The offer cut churn by 4.8 percentage points (about 10% relative); z = −2.00, p = 0.045, 95% CI −9.4 to −0.1 pp.</p>
 <p><strong>The economics are the more important result.</strong> About 43 subscribers were kept, worth roughly $8,800 in lifetime value, against about $9,760 of offer cost. One offer returns about $9.71 in expected retained LTV (4.76 pp × $204) and costs $10.80, so <strong>every offer loses about a dollar</strong>. Break-even needs an offer under ~$9.71 or an uplift of about 5.3 pp or more.</p>
 <p>Better targeting doesn't fix this on its own: the test measured one average uplift, so each offer saves the same amount whoever receives it. To check whether high-risk subscribers respond more, I split the 1,500 test subscribers I had scores for into risk thirds:</p>
-<p><img loading="lazy" alt="Uplift by risk tier" src="../assets/growth-retention-analytics/charts/12-uplift-by-risk-tier.png" /></p>
+<p><img loading="lazy" alt="Uplift by risk tier" src="../assets/growth-retention-analytics/charts/12-uplift-by-risk-tier.png" width="1224" height="656" /></p>
 <p>The reductions were 9.0 pp (low), 1.9 pp (mid) and 6.9 pp (high), with about 250 per arm in each. That is noise, not a pattern; it gives no reason to believe high-risk subscribers respond more, and the test wasn't powered to say.</p>
 <h2>8 · Forecast, handoff and recommendation</h2>
 <p><strong>Pacing.</strong> At the current run-rate (1,934 active subscribers, ~130 new and ~88 cancelling per month, recent monthly churn ≈ 4.5%), active subscribers reach about 2,054 by quarter-end. Against an illustrative target of 2,100 that is roughly 2% behind (46 short), a small miss, flagged a quarter ahead. Varying churn by ±0.5 pp and adds by ±20 a month gives a range of about 1,970 to 2,140, so the target is within reach if retention improves.</p>
-<p><img loading="lazy" alt="Forecast vs target" src="../assets/growth-retention-analytics/charts/07-forecast-pacing.png" /></p>
+<p><img loading="lazy" alt="Forecast vs target" src="../assets/growth-retention-analytics/charts/07-forecast-pacing.png" width="1229" height="643" /></p>
 <p>The cleanest lever to close the gap is nudging engaged monthly subscribers to the annual plan, which locks in retention at no discount cost; a cost-controlled win-back is the second. The recent 4.5% run-rate sits below the 5.3% lifetime figure because they are different windows and methods, so I use 5.3% for LTV and the run-rate for near-term pacing.</p>
 <p><strong>The at-risk list.</strong> I scored the 1,564 active subscribers who were still subscribed at month 3 (out-of-fold), ranked them into deciles, and tagged each with an action matched to risk, plan and engagement, spending margin only where it can pay:</p>
 <div class="table-scroll"><table>
@@ -582,7 +584,7 @@ left join {{ ref('ref_acq_cost') }} seed on seed.channel = sp.channel
 </tbody>
 </table></div>
 <p>The rule that assigns the action is plain SQL on the ranked table, so Product can read and change it:</p>
-<pre><code class="language-sql">SELECT subscription_id, plan, p_churn, decile,
+<pre tabindex="0"><code class="language-sql">SELECT subscription_id, plan, p_churn, decile,
   CASE
     WHEN decile &lt;= 3 AND plan = 'monthly' THEN 'save_offer'
     WHEN decile &lt;= 3 AND plan = 'annual'  THEN 'engagement_nudge'      -- never discount an annual
@@ -687,7 +689,7 @@ FROM churn_ranked ORDER BY p_churn DESC;
 </tbody>
 </table></div>
 </div>
-<nav class="pager"><a href="llm-review-scorer.html">← LLM Review Scorer</a><a href="notion-voice-ai.html">Notion Voice AI →</a></nav>
+<nav class="pager" aria-label="Previous and next project"><a href="llm-review-scorer.html"><span aria-hidden="true">←</span> LLM Review Scorer</a><a href="notion-voice-ai.html">Notion Voice AI <span aria-hidden="true">→</span></a></nav>
 </main>
 <footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
 <nav class="dock" aria-label="Sections">

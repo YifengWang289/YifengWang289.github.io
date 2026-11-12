@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>Notion Voice AI · Yifeng (Chloe) Wang</title>
 <meta name="description" content="A product concept for adding voice-driven creation, editing and restructuring to Notion — from the first user problem to feature scope, pricing, go-to-market and a phased rollout.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,12 +11,13 @@
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 <header class="site-header"><div class="wrap bar">
 <a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
 <span class="top-note">Business · Data · Product</span>
 </div></header>
-<main class="wrap article">
-<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<main id="main" class="wrap article">
+<p class="back"><a href="../index.html#projects"><span aria-hidden="true">←</span> All Projects</a></p>
 <p class="kicker reveal">Product · AI</p>
 <h1 class="reveal" style="--d:.08s">Notion Voice AI</h1>
 <div class="lead reveal" style="--d:.16s"><p>A product concept for adding <strong>voice-driven creation, editing and restructuring</strong> to Notion — from the first user problem to feature scope, pricing, go-to-market and a phased rollout.</p></div>
@@ -27,7 +29,7 @@
 <hr />
 <h2>Who it's for and what I learned</h2>
 <p>I surveyed Notion users, mostly students (12–13 responses per question), and read the results against Notion's existing user journey (visit → create → organize → edit → collaborate → save &amp; share → re-engage). Three target segments: busy professionals, busy students, and users with accessibility needs.</p>
-<p><img loading="lazy" alt="Survey signals" src="../assets/notion-voice-ai/chart-survey-signals.png" /></p>
+<p><img loading="lazy" alt="Survey signals" src="../assets/notion-voice-ai/chart-survey-signals.png" width="1900" height="919" /></p>
 <p>What the answers said, and what I did with each:</p>
 <div class="table-scroll"><table>
 <thead>
@@ -66,7 +68,7 @@
 <hr />
 <h2>Key decision 1 — what to build, and what to leave out</h2>
 <p>I scored four candidate features with MoSCoW against user value, business viability and technical feasibility.</p>
-<p><img loading="lazy" alt="MoSCoW prioritization" src="../assets/notion-voice-ai/slide-moscow.png" /></p>
+<p><img loading="lazy" alt="MoSCoW prioritization" src="../assets/notion-voice-ai/slide-moscow.png" width="1100" height="619" /></p>
 <ul>
 <li><strong>Voice AI — Must have.</strong> Fits the strongest research signals, buildable on existing speech-recognition and LLM capabilities, and has a clear paid-tier path. Notion-for-Apple-Watch feedback also pointed at demand for voice.</li>
 <li><strong>Notion for Apple Watch — Should have.</strong> Real on-the-go value, but it reaches only smartwatch users and needs heavy UI and capital investment.</li>
@@ -82,15 +84,15 @@
 <li><strong>Restructure</strong> — turn a paragraph into a table, add rows or columns, autofill empty cells. <em>(task management is the dominant use case)</em></li>
 <li><strong>Optimize</strong> — suggest better wording and elaborations for a highlighted section. <em>(summarization and auto-layout are what people would pay for)</em></li>
 </ol>
-<p><img loading="lazy" alt="Entry point — Voice AI sits next to Notion's existing AI actions" src="../assets/notion-voice-ai/01-entry-point.png" /></p>
-<p><img loading="lazy" alt="Create — dictate a note, get structured content, with example commands on the right" src="../assets/notion-voice-ai/02-create-content.png" /></p>
-<p><img loading="lazy" alt="Refine — highlight a section and direct the edit by voice" src="../assets/notion-voice-ai/03-refine-content.png" /></p>
-<p><img loading="lazy" alt="Restructure — a paragraph becomes a table on request" src="../assets/notion-voice-ai/04-restructure-result.png" /></p>
-<p><img loading="lazy" alt="Optimize — rephrase and elaborate a highlighted section" src="../assets/notion-voice-ai/05-optimize-suggestions.png" /></p>
+<p><img loading="lazy" alt="Entry point — Voice AI sits next to Notion's existing AI actions" src="../assets/notion-voice-ai/01-entry-point.png" width="712" height="470" /></p>
+<p><img loading="lazy" alt="Create — dictate a note, get structured content, with example commands on the right" src="../assets/notion-voice-ai/02-create-content.png" width="861" height="622" /></p>
+<p><img loading="lazy" alt="Refine — highlight a section and direct the edit by voice" src="../assets/notion-voice-ai/03-refine-content.png" width="863" height="573" /></p>
+<p><img loading="lazy" alt="Restructure — a paragraph becomes a table on request" src="../assets/notion-voice-ai/04-restructure-result.png" width="869" height="575" /></p>
+<p><img loading="lazy" alt="Optimize — rephrase and elaborate a highlighted section" src="../assets/notion-voice-ai/05-optimize-suggestions.png" width="785" height="515" /></p>
 <p>The storyboard follows one busy manager through the flow — creating a team update by voice, adjusting it, restructuring it into a table — finishing in about five minutes.</p>
-<p><img loading="lazy" alt="Storyboard" src="../assets/notion-voice-ai/06-storyboard.png" /></p>
+<p><img loading="lazy" alt="Storyboard" src="../assets/notion-voice-ai/06-storyboard.png" width="1095" height="785" /></p>
 <p>How each stage of the existing journey changes:</p>
-<p><img loading="lazy" alt="Journey mapping — where Voice AI improves each stage" src="../assets/notion-voice-ai/slide-journey-mapping.png" /></p>
+<p><img loading="lazy" alt="Journey mapping — where Voice AI improves each stage" src="../assets/notion-voice-ai/slide-journey-mapping.png" width="1100" height="619" /></p>
 <hr />
 <h2>Key decision 2 — pricing: bundle it, tier it, and make the first try free</h2>
 <p><strong>Benchmark.</strong> Comparable AI tools cluster between $10 and $20 a month: Nuclino Sidekick $10, Otter.ai $16.99, Amazon Alexa+ $19.99, ChatGPT Plus $20, with Jasper higher at $39. Most pair a free tier with $10–20 plans.</p>
@@ -99,11 +101,11 @@
 - <strong>Paid plan ($10 per seat per month, no price increase):</strong> core Voice AI — hands-free activation for content creation, voice editing and task execution, plus a 14-day free trial.
 - <strong>Business tier ($15 per seat per month):</strong> advanced AI tools — smart summarization, auto-layout structuring, AI-generated reminders and voice-activated database syncing. Priced below competitors, aimed at power users and teams.
 - <strong>Students:</strong> 50% discount.</p>
-<p><img loading="lazy" alt="Pricing plan" src="../assets/notion-voice-ai/slide-proposed-pricing.png" /></p>
+<p><img loading="lazy" alt="Pricing plan" src="../assets/notion-voice-ai/slide-proposed-pricing.png" width="1300" height="732" /></p>
 <p>The logic is second-degree price discrimination: heavy users self-select into the higher tier, casual users stay free, and bundling matches the survey, where more respondents preferred AI included in the subscription than any other option.</p>
 <h3>Testing the pricing with GenAI — and not trusting it blindly</h3>
 <p>To pressure-test the packaging before any real-user test, I ran a willingness-to-pay simulation: GPT-4o and DeepSeek were given the survey findings and asked to act as a Notion user deciding between the free plan and the new paid options.</p>
-<p><img loading="lazy" alt="Simulation results" src="../assets/notion-voice-ai/chart-wtp-simulation.png" /></p>
+<p><img loading="lazy" alt="Simulation results" src="../assets/notion-voice-ai/chart-wtp-simulation.png" width="1800" height="840" /></p>
 <p>What happened, and what I concluded:
 - As a <strong>student persona</strong>, GPT-4o rejected every paid plan (0 of 30) and kept asking for 40–60% discounts; DeepSeek converted 1 of 10. The model had defaulted to a "students are broke" stereotype.
 - As a <strong>general user</strong>, 8 of 30 GPT-4o runs paid (6 for the base paid plan, 2 for the higher tier).
@@ -114,15 +116,15 @@
 <p><strong>Positioning.</strong> For users: hands-free productivity, seamless mobility, and AI that simplifies complex workflows. For Notion: competitive differentiation in voice-enabled productivity, more Plus and Business subscriptions, and better retention and engagement.</p>
 <h3>Promotion — one message per audience</h3>
 <p>The plan follows four principles: speak to each group with its own slogan, turn complex features into tangible benefits, show a usage scenario, and give interested users an immediate next step. I designed concept creatives for three channels.</p>
-<p><img loading="lazy" alt="In-email announcement with annotated design choices" src="../assets/notion-voice-ai/slide-ad-email.png" /></p>
-<p><img loading="lazy" alt="Campus website ad for students and LinkedIn ad for professionals" src="../assets/notion-voice-ai/slide-ad-campus-linkedin.png" /></p>
+<p><img loading="lazy" alt="In-email announcement with annotated design choices" src="../assets/notion-voice-ai/slide-ad-email.png" width="1300" height="732" /></p>
+<p><img loading="lazy" alt="Campus website ad for students and LinkedIn ad for professionals" src="../assets/notion-voice-ai/slide-ad-campus-linkedin.png" width="1300" height="732" /></p>
 <ul>
 <li><strong>In-email:</strong> segments by behavior and prior engagement to reach high-intent users; "Work Smarter, Not Harder", a short usage scenario, three command examples and a "View Our Demo" button.</li>
 <li><strong>Campus website:</strong> students are a core Notion audience, and a campus site is a trusted, relevant place to reach them, paired with the student discount.</li>
 <li><strong>LinkedIn:</strong> a business setting that reaches professionals when they are looking for productivity tools.</li>
 </ul>
 <h3>Customer acquisition — four routes</h3>
-<p><img loading="lazy" alt="Customer acquisition plan" src="../assets/notion-voice-ai/slide-acquisition-plan.png" /></p>
+<p><img loading="lazy" alt="Customer acquisition plan" src="../assets/notion-voice-ai/slide-acquisition-plan.png" width="1300" height="732" /></p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -227,7 +229,7 @@
 </ul>
 <hr />
 </div>
-<nav class="pager"><a href="growth-retention-analytics.html">← Growth & Retention Analytics</a><a href="pta-r-analytics.html">Predictive Analytics in R →</a></nav>
+<nav class="pager" aria-label="Previous and next project"><a href="growth-retention-analytics.html"><span aria-hidden="true">←</span> Growth & Retention Analytics</a><a href="pta-r-analytics.html">Predictive Analytics in R <span aria-hidden="true">→</span></a></nav>
 </main>
 <footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
 <nav class="dock" aria-label="Sections">

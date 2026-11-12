@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>GenAI Threat Radar · Yifeng (Chloe) Wang</title>
-<meta name="description" content="A competitive-strategy engagement for an enterprise contract lifecycle management (CLM) leader: a repeatable way to find and score GenAI startups entering the market, an LLM agent that automates the s">
+<meta name="description" content="A competitive-strategy engagement for an enterprise contract lifecycle management (CLM) leader: a repeatable way to find and score GenAI startups entering the market, an LLM agent that automates the scoring, and a sized view of the AI-negotiation opportunity.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
 <link rel="stylesheet" href="../css/style.css">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 <header class="site-header"><div class="wrap bar">
 <a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
 <span class="top-note">Business · Data · Product</span>
 </div></header>
-<main class="wrap article">
-<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<main id="main" class="wrap article">
+<p class="back"><a href="../index.html#projects"><span aria-hidden="true">←</span> All Projects</a></p>
 <p class="kicker reveal">AI · Strategy</p>
 <h1 class="reveal" style="--d:.08s">GenAI Threat Radar</h1>
 <div class="lead reveal" style="--d:.16s"><p>A competitive-strategy engagement for an enterprise contract lifecycle management (CLM) leader: a repeatable way to find and score GenAI startups entering the market, an LLM agent that automates the scoring, and a sized view of the AI-negotiation opportunity. The findings end in Buy / Build / Watch calls.</p></div>
@@ -31,11 +33,11 @@
 <p>The engagement ran about three months (Feb–May 2025) and closed with a readout to the client's product and marketing leadership.</p>
 <hr />
 <h2>Approach</h2>
-<p><img loading="lazy" alt="Map → Score → Size → Decide" src="../assets/clm-genai-competitive/01-approach.png" /></p>
+<p><img loading="lazy" alt="Map → Score → Size → Decide" src="../assets/clm-genai-competitive/01-approach.png" width="1960" height="500" /></p>
 <hr />
 <h2>1 · Map the landscape</h2>
 <p>The long list started with <strong>1,600+ legal-tech startups pulled from Crunchbase</strong>. A deep-dive shortlist was then chosen on relevance to contract workflows. Every shortlisted company was profiled through three lenses:</p>
-<p><img loading="lazy" alt="Three-lens competitive framework" src="../assets/clm-genai-competitive/02-framework.png" /></p>
+<p><img loading="lazy" alt="Three-lens competitive framework" src="../assets/clm-genai-competitive/02-framework.png" width="1960" height="900" /></p>
 <ul>
 <li><strong>Business attributes:</strong> can they win the buyer? Market focus, customer size, pricing, funding, sales channels, notable customers.</li>
 <li><strong>Core capabilities:</strong> what do they actually do? Six contract-management categories, each broken into concrete sub-features (e.g. <em>review &amp; negotiation</em> = review, redline/edit, negotiation guidance). A category score is the share of its sub-features found in public sources, so "AI-powered platform" marketing copy doesn't earn points on its own.</li>
@@ -51,7 +53,7 @@
 <p>Getting from there to a reliable, repeatable scorer was mostly a prompt-engineering problem.</p>
 <h3>How the prompt evolved</h3>
 <p>The prompt went through several rounds of iteration before it could run unattended. Each version fixed a specific failure of the one before:</p>
-<p><img loading="lazy" alt="Prompt evolution: conversational → reusable template → one prompt per cell" src="../assets/clm-genai-competitive/03a-prompt-evolution.png" /></p>
+<p><img loading="lazy" alt="Prompt evolution: conversational → reusable template → one prompt per cell" src="../assets/clm-genai-competitive/03a-prompt-evolution.png" width="2270" height="1085" /></p>
 <ol>
 <li><strong>v1 · Conversational.</strong> A ChatGPT chat about one company, with capability definitions pasted in. The output only became usable after follow-ups: first "a yes or no for each feature", then "how sure you are, and where on the website you see it". This showed that an LLM could pull capability evidence from public sites. It did not scale.</li>
 <li><strong>v3 · Reusable template.</strong> The follow-ups were folded into one parameterized prompt (<code>For [company]…</code>) with two parts: 20 business and technology fields, and 6 capabilities with explicit definitions. Every answer had to carry a <strong>confidence score, the source website, and the quoted text</strong>, so a reviewer could check any cell against its evidence. The template was tested across 15 companies before it was locked.</li>
@@ -60,7 +62,7 @@
 <p><strong>The biggest structural change came in step 3.</strong> A single prompt that fills ~26 fields works in a chat window, where a person reads the answer. A script needs output it can parse without guesswork. Small prompts with a rigid format give it that, and a failure costs one cell instead of a whole company. The trade-off is many more API calls, so runs are slower and hit rate limits (see <em>Limits</em> below).</p>
 <h3>The scoring agent</h3>
 <p>The final version runs the whole loop without a pre-scraped dataset:</p>
-<p><img loading="lazy" alt="Scoring agent pipeline" src="../assets/clm-genai-competitive/03-agent-pipeline.png" /></p>
+<p><img loading="lazy" alt="Scoring agent pipeline" src="../assets/clm-genai-competitive/03-agent-pipeline.png" width="2192" height="623" /></p>
 <ul>
 <li><strong>Input:</strong> a spreadsheet of companies × capability definitions.</li>
 <li><strong>Loop:</strong> one GPT-4o call per company × capability, with the <code>web_search</code> tool enabled at temperature 0. The prompt asks for a 0–1 score plus a one-sentence explanation citing sources.</li>
@@ -69,12 +71,12 @@
 <li><strong>Handoff:</strong> a step-by-step runbook so the client's team can rerun it on new companies in Google Colab.</li>
 </ul>
 <p>A full run covered <strong>11 companies × 7 capabilities in about 8 minutes</strong>.</p>
-<p><img loading="lazy" alt="Agent scoring run, replayed" src="../assets/clm-genai-competitive/demo-agent-scoring.gif" /></p>
+<p><img loading="lazy" alt="Agent scoring run, replayed" src="../assets/clm-genai-competitive/demo-agent-scoring.gif" width="1168" height="804" /></p>
 <p><strong>Why a human stays in the loop.</strong> The agent is fast, but it can score the wrong thing. In the sample below, it correctly grounded one score and correctly returned a negative. It also gave a personal-injury legal-AI company 0.9 on <em>obligation &amp; compliance management</em>, because that company is SOC 2 and HIPAA compliant. That describes its security posture, not a compliance product. Final scoring therefore paired automation with analyst review.</p>
-<p><img loading="lazy" alt="Sample agent output with review flags" src="../assets/clm-genai-competitive/04-agent-output-sample.png" /></p>
+<p><img loading="lazy" alt="Sample agent output with review flags" src="../assets/clm-genai-competitive/04-agent-output-sample.png" width="2037" height="808" /></p>
 <hr />
 <h2>3 · What the data showed</h2>
-<p><img loading="lazy" alt="Capability coverage heatmap" src="../assets/clm-genai-competitive/05-capability-heatmap.png" /></p>
+<p><img loading="lazy" alt="Capability coverage heatmap" src="../assets/clm-genai-competitive/05-capability-heatmap.png" width="2547" height="1217" /></p>
 <ul>
 <li><strong>Review &amp; negotiation is table stakes.</strong> Every vendor on the shortlist covered at least two-thirds of the review &amp; negotiation sub-features. That's where GenAI startups compete.</li>
 <li><strong>The rest of the lifecycle is thin.</strong> No startup covered more than half of <em>contract performance</em>. Only the full-suite CLM vendors came close to the client on obligation management and analytics.</li>
@@ -82,7 +84,7 @@
 </ul>
 <hr />
 <h2>4 · Size the negotiation opportunity</h2>
-<p><img loading="lazy" alt="Negotiation TAM and GenAI growth by function" src="../assets/clm-genai-competitive/06-tam.png" /></p>
+<p><img loading="lazy" alt="Negotiation TAM and GenAI growth by function" src="../assets/clm-genai-competitive/06-tam.png" width="2391" height="973" /></p>
 <ul>
 <li><strong>Top-down:</strong> adjacent software markets (CLM ~$2.3B, e-sourcing ~$5.2B, proposal management ~$2.3B, CPQ ~$2.6B) add up to roughly <strong>$10–15B</strong> of negotiation-related software spend.</li>
 <li><strong>Bottom-up:</strong> segment count × adoption × annual spend lands at <strong>≈ $13B</strong>: about $8B from large enterprises, $5B from mid-market firms, and under $1B from small businesses. The two methods agree.</li>
@@ -92,7 +94,7 @@
 <hr />
 <h2>5 · Recommendation: Buy / Build / Watch</h2>
 <p>Each emerging player goes through a four-step filter: <strong>strategic alignment → differentiation → commercial threat → build-vs-buy economics.</strong> Two examples from the final readout:</p>
-<p><img loading="lazy" alt="Buy / Build / Watch filter applied to two startups" src="../assets/clm-genai-competitive/07-buy-build-watch.png" /></p>
+<p><img loading="lazy" alt="Buy / Build / Watch filter applied to two startups" src="../assets/clm-genai-competitive/07-buy-build-watch.png" width="2115" height="839" /></p>
 <ul>
 <li><strong>A Series A GenAI negotiation copilot → Buy.</strong> It is only partly aligned with the client's enterprise focus. But it is clearly differentiated (native GenAI copilot, strong redlining and fallback automation), gaining traction with legal-ops teams, and would be hard to replicate quickly. The price is still reasonable for its stage.</li>
 <li><strong>An early-stage redlining tool → Watch.</strong> Its market is misaligned, its features are easy to build and overlap existing capabilities, and it has no meaningful commercial footprint yet. Keep it on the radar and don't spend on it.</li>
@@ -137,7 +139,7 @@
 <hr />
 <hr />
 </div>
-<nav class="pager"><a href="ecolab-fda-data-product.html">← FDA Compliance Data Product</a><a href="portfolio-optimizer.html">Portfolio Optimizer →</a></nav>
+<nav class="pager" aria-label="Previous and next project"><a href="ecolab-fda-data-product.html"><span aria-hidden="true">←</span> FDA Compliance Data Product</a><a href="portfolio-optimizer.html">Portfolio Optimizer <span aria-hidden="true">→</span></a></nav>
 </main>
 <footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
 <nav class="dock" aria-label="Sections">

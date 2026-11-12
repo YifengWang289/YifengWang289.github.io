@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>LLM Review Scorer · Yifeng (Chloe) Wang</title>
 <meta name="description" content="An evaluation of whether an LLM can recover a 1–5 star rating from review text alone — and whether that is good enough to put in front of users.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,12 +11,13 @@
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 <header class="site-header"><div class="wrap bar">
 <a class="brand" href="../index.html">Yifeng (Chloe) Wang</a>
 <span class="top-note">Business · Data · Product</span>
 </div></header>
-<main class="wrap article">
-<p class="back"><a href="../index.html#projects">← All projects</a></p>
+<main id="main" class="wrap article">
+<p class="back"><a href="../index.html#projects"><span aria-hidden="true">←</span> All Projects</a></p>
 <p class="kicker reveal">AI · Evaluation</p>
 <h1 class="reveal" style="--d:.08s">LLM Review Scorer</h1>
 <div class="lead reveal" style="--d:.16s"><p>An evaluation of whether an LLM can recover a 1–5 star rating from review text alone — and whether that is good enough to put in front of users.</p>
@@ -37,7 +39,7 @@
 <hr />
 <h2>What the eval found</h2>
 <p>Five prompt versions, each adding one thing, all scored on the same 500 reviews.</p>
-<p><img loading="lazy" alt="Mean absolute error by method, with 95% confidence intervals" src="../assets/review-scorer/01-mae-by-method.png" /></p>
+<p><img loading="lazy" alt="Mean absolute error by method, with 95% confidence intervals" src="../assets/review-scorer/01-mae-by-method.png" width="1440" height="912" /></p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -121,9 +123,9 @@
 <hr />
 <h2>Where it fails</h2>
 <p>Errors run one direction and sit in the middle of the scale: <strong>the model is harsher than the people who wrote the reviews.</strong></p>
-<p><img loading="lazy" alt="Mean signed error by true star rating" src="../assets/review-scorer/02-bias-by-star.png" /></p>
+<p><img loading="lazy" alt="Mean signed error by true star rating" src="../assets/review-scorer/02-bias-by-star.png" width="1280" height="760" /></p>
 <p>3★ reviews are the worst case — predicted correctly 40% of the time, pushed down to 2★ in another 40%.</p>
-<p><img loading="lazy" alt="Confusion matrix for the final prompt version" src="../assets/review-scorer/03-confusion-v4.png" /></p>
+<p><img loading="lazy" alt="Confusion matrix for the final prompt version" src="../assets/review-scorer/03-confusion-v4.png" width="840" height="760" /></p>
 <p>The failure is legible in the text. A reviewer writes <em>"doesn't move enough air to clear debris, wish I'd gone for the larger size"</em> and gives it 3 stars. The model reads a named defect and scores dissatisfaction. People use the middle of the scale for "fine, with a real caveat"; the model treats any concrete complaint as a complaint.</p>
 <p><strong>Fixing the pattern worked, but not by much.</strong> v4 is v0 plus three anchor lines written directly from the dev-set errors — <em>a review naming a flaw without anger is usually a 3, not a 2</em>. It cut bias from −0.24 to −0.15 and raised exact matches to 63%, the best of any version. But against the one-line prompt the difference is inside the noise (ΔMAE +0.015, CI [−0.021, +0.052]). Reporting that honestly matters more than claiming the win.</p>
 <hr />
@@ -163,7 +165,7 @@
 <hr />
 <h2>Shipping shape</h2>
 <p>The model reports its own confidence with each score. It is not well calibrated — it said <code>low</code> exactly once in 500 reviews — but it does separate signal: the 27% it marks <code>high</code> score at MAE 0.20 and 83% exact, against 0.49 for the rest. Combined with disagreement across repeated runs, that gives a coverage curve rather than a single number.</p>
-<p><img loading="lazy" alt="Error on auto-handled reviews against automation coverage" src="../assets/review-scorer/04-routing-curve.png" /></p>
+<p><img loading="lazy" alt="Error on auto-handled reviews against automation coverage" src="../assets/review-scorer/04-routing-curve.png" width="1320" height="760" /></p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -259,7 +261,7 @@
 <p>The assumption was reasonable when it was written and wrong a year later, and nothing about writing a better prompt would have revealed that. Only the eval did. The durable asset from this project is not the prompt, which a model upgrade can make obsolete overnight; it is the 500-review test set that tells me, in an afternoon, whether the upgrade helped.</p>
 <hr />
 </div>
-<nav class="pager"><a href="portfolio-optimizer.html">← Portfolio Optimizer</a><a href="growth-retention-analytics.html">Growth & Retention Analytics →</a></nav>
+<nav class="pager" aria-label="Previous and next project"><a href="portfolio-optimizer.html"><span aria-hidden="true">←</span> Portfolio Optimizer</a><a href="growth-retention-analytics.html">Growth & Retention Analytics <span aria-hidden="true">→</span></a></nav>
 </main>
 <footer class="site-footer"><div class="wrap"><span>© Yifeng (Chloe) Wang</span><a href="../index.html#contact">Contact</a></div></footer>
 <nav class="dock" aria-label="Sections">

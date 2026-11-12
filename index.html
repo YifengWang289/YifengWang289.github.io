@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#061018" media="(prefers-color-scheme: dark)">
 <title>Yifeng (Chloe) Wang · Business, Data &amp; Product Analyst</title>
 <meta name="description" content="Business, data and product analyst for growth and marketing questions. Selected projects in product strategy, predictive analytics, LLM evaluation and dashboards.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,6 +12,7 @@
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.add('reveal-fallback')},3000)</script>
 </head>
 <body>
+<a class="skip" href="#top">Skip to main content</a>
 <header class="site-header"><div class="wrap bar">
   <a class="brand" href="#top">Yifeng (Chloe) Wang</a>
   <span class="top-note">Business · Data · Product</span>
@@ -21,21 +24,30 @@
     <h1 class="reveal" style="--d:.1s">Business and <em>data</em> analyst.</h1>
     <p class="sub reveal" style="--d:.2s">I turn messy data and unclear requirements into analyses, dashboards and product decisions that teams can act on.</p>
     <div class="cta reveal" style="--d:.3s">
-      <a class="btn primary" href="#projects">See projects</a>
+      <a class="btn primary" href="#projects">See Projects</a>
       <a class="btn" href="https://www.linkedin.com/in/yf289">LinkedIn</a>
     </div>
     <div class="facts reveal" style="--d:.4s">
       <span><b>M.P.S. Information Science</b>, Cornell</span>
       <span><b>B.S. Finance &amp; Information Systems</b>, Ohio State</span>
-      <span>Columbus, OH · open to relocation</span>
     </div>
   </div>
-  <figure class="hero-photo reveal" style="--d:.2s">
-    <img src="assets/profile/portrait.jpg" width="900" height="1125" alt="Portrait of Yifeng (Chloe) Wang on a lookout deck with autumn trees behind">
-  </figure>
+  <div class="badge-wrap reveal" style="--d:.2s">
+    <figure class="badge" id="badge">
+      <span class="strap" aria-hidden="true"></span>
+      <span class="clip" aria-hidden="true"></span>
+      <div class="card-face">
+        <span class="slot" aria-hidden="true"></span>
+        <div class="ph"><img src="assets/profile/portrait.jpg" width="520" height="650" fetchpriority="high" alt="Portrait of Yifeng (Chloe) Wang on a lookout deck with autumn trees behind"></div>
+        <figcaption class="who"><strong>Yifeng (Chloe) Wang</strong></figcaption>
+        <div class="meta"><span>Columbus, OH</span><span>Open to relocation</span></div>
+        <span class="glare" aria-hidden="true"></span>
+      </div>
+    </figure>
+  </div>
 </div>
 
-<div class="marquee" aria-label="Skills and methods">
+<div class="marquee" role="region" aria-label="Skills and methods" tabindex="0">
   <div class="track">
     <ul>
       <li>SQL</li><li>Python</li><li>R</li><li>Tableau</li><li>Power BI</li><li>Excel &amp; VBA</li><li>Snowflake</li><li>Databricks</li><li>dbt</li><li>A/B testing</li><li>Funnel &amp; cohort analysis</li><li>Pricing</li><li>Requirements</li><li>Process mapping</li><li>LLM evaluation</li>
@@ -59,52 +71,52 @@
     <div class="grid">
 
     <a class="card" href="projects/growth-retention-analytics.html">
-      <div class="thumb"><img loading="lazy" src="assets/growth-retention-analytics/charts/02-ltv-cac-by-channel.png" alt="LTV:CAC by acquisition channel, with paid social below the 3.0 bar"></div>
+      <div class="thumb"><img loading="lazy" src="assets/covers/01-growth-retention-analytics.png" alt="Cover: which acquisition channels pay back, with LTV:CAC by channel" width="1600" height="1000"></div>
       <div class="body">
         <p class="kicker">Data · Marketing analytics</p>
         <h3>Growth &amp; Retention Analytics</h3>
         <p>Which acquisition channels pay back, and who is about to cancel. Funnel, channel economics, a churn model and a win-back test for a learning app.</p>
-        <span class="more">Read case study</span>
+        <span class="more">Read Case Study</span>
       </div>
     </a>
 
     <a class="card" href="projects/ecolab-fda-data-product.html">
-      <div class="thumb"><img loading="lazy" src="assets/ecolab-fda/charts/03-top-cfr.png" alt="Bar chart of the most-cited FDA food regulations"></div>
+      <div class="thumb"><img loading="lazy" src="assets/covers/02-fda-compliance.png" alt="Cover: five FDA data sources merged into one searchable view" width="1600" height="1000"></div>
       <div class="body">
         <p class="kicker">Data · Python · Tableau</p>
         <h3>FDA Compliance Data Product</h3>
         <p>Five FDA data sources merged into one searchable dashboard with a one-click refresh, built for a hygiene services company.</p>
-        <span class="more">Read case study</span>
+        <span class="more">Read Case Study</span>
       </div>
     </a>
 
     <a class="card" href="projects/pta-r-analytics.html">
-      <div class="thumb"><img loading="lazy" src="assets/pta-r-analytics/charts/sales-03-volume-vs-profit.png" alt="Bar chart comparing share of predicted volume and profit by product type"></div>
+      <div class="thumb"><img loading="lazy" src="assets/covers/03-predictive-analytics-r.png" alt="Cover: three predictive models, a regression, a bar chart and a network" width="1600" height="1000"></div>
       <div class="body">
         <p class="kicker">Data · ML · R</p>
         <h3>Predictive Analytics in R</h3>
         <p>Three predictive models in R for an electronics retailer: brand preference, new-product sales and market basket.</p>
-        <span class="more">Read case study</span>
+        <span class="more">Read Case Study</span>
       </div>
     </a>
 
     <a class="card" href="projects/llm-review-scorer.html">
-      <div class="thumb"><img loading="lazy" src="assets/review-scorer/01-mae-by-method.png" alt="Mean absolute error by method, with confidence intervals and a human baseline"></div>
+      <div class="thumb"><img loading="lazy" src="assets/covers/04-llm-review-scorer.png" alt="Cover: review text in, star rating out" width="1600" height="1000"></div>
       <div class="body">
         <p class="kicker">AI · Evaluation</p>
         <h3>LLM Review Scorer</h3>
         <p>Testing an LLM that turns review text into star ratings: a simple prompt beat the engineered one at a tenth of the cost.</p>
-        <span class="more">Read case study</span>
+        <span class="more">Read Case Study</span>
       </div>
     </a>
 
     <a class="card" href="projects/portfolio-optimizer.html">
-      <div class="thumb"><img loading="lazy" src="assets/excel-optimizer/01-home-overview.png" alt="Portfolio Optimizer home dashboard"></div>
+      <div class="thumb"><img loading="lazy" src="assets/covers/05-portfolio-optimizer.png" alt="Cover: an allocation chart with risk, return and diversification sliders" width="1600" height="1000"></div>
       <div class="body">
         <p class="kicker">Data · Excel · VBA</p>
         <h3>Portfolio Optimizer</h3>
         <p>An interactive Excel dashboard that lets a beginner build a diversified portfolio from live market data.</p>
-        <span class="more">Read case study</span>
+        <span class="more">Read Case Study</span>
       </div>
     </a>
 
@@ -114,32 +126,32 @@
     <div class="grid">
 
     <a class="card" href="projects/notion-voice-ai.html">
-      <div class="thumb"><img loading="lazy" src="assets/notion-voice-ai/04-restructure-result.png" alt="Mockup of a voice command turning a paragraph into a table in Notion"></div>
+      <div class="thumb"><img loading="lazy" src="assets/covers/06-notion-voice-ai.png" alt="Cover: a voice waveform turning into a structured table" width="1600" height="1000"></div>
       <div class="body">
         <p class="kicker">Product · AI</p>
         <h3>Notion Voice AI</h3>
         <p>A product concept for voice-driven editing in Notion: user survey, pricing, go-to-market and a willingness-to-pay simulation.</p>
-        <span class="more">Read case study</span>
+        <span class="more">Read Case Study</span>
       </div>
     </a>
 
     <a class="card" href="projects/genai-threat-radar.html">
-      <div class="thumb"><img loading="lazy" src="assets/clm-genai-competitive/05-capability-heatmap.png" alt="Capability heatmap of GenAI contract-management startups"></div>
+      <div class="thumb"><img loading="lazy" src="assets/covers/07-genai-threat-radar.png" alt="Cover: a radar chart of market entrants" width="1600" height="1000"></div>
       <div class="body">
         <p class="kicker">AI · Competitive strategy</p>
         <h3>GenAI Threat Radar</h3>
         <p>An LLM agent that scores GenAI startups entering contract management, with a Buy / Build / Watch recommendation.</p>
-        <span class="more">Read case study</span>
+        <span class="more">Read Case Study</span>
       </div>
     </a>
 
     <a class="card" href="projects/balancepoint.html">
-      <div class="thumb"><img loading="lazy" src="assets/info5355/cover.png" alt="Three screens of the BalancePoint app: break timer, cycle suggestion and task list"></div>
+      <div class="thumb"><img loading="lazy" src="assets/covers/08-balancepoint.png" alt="Cover: a seesaw balancing study against a break" width="1600" height="1000"></div>
       <div class="body">
         <p class="kicker">Product · User research</p>
         <h3>BalancePoint</h3>
         <p>A break-balancing app for graduate students, from interviews and personas to prototypes and a usability test.</p>
-        <span class="more">Read case study</span>
+        <span class="more">Read Case Study</span>
       </div>
     </a>
 
