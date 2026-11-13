@@ -18,7 +18,7 @@
 </div></header>
 <main id="main" class="wrap article">
 <p class="back"><a href="../index.html#projects"><span aria-hidden="true">←</span> All Projects</a></p>
-<p class="kicker reveal">Data · Marketing analytics</p>
+<p class="kicker reveal">Marketing analytics · Growth</p>
 <h1 class="reveal" style="--d:.08s">Growth & Retention Analytics</h1>
 <div class="lead reveal" style="--d:.16s"><p>A growth analysis for a consumer online-learning subscription app that was spending more to acquire learners while losing paying ones a few months in. I defined the metrics, measured the funnel and channel economics, built the data models in dbt, built and stress-tested a churn model, read a win-back experiment, and turned it into a budget and retention decision.</p></div>
 <ul class="chips reveal" style="--d:.24s"><li>Databricks (SQL editor, Python notebooks, Unity Catalog)</li><li>SQL</li><li>dbt on Databricks (staging → marts, tests, snapshots)</li><li>Python (pandas, scikit-learn, XGBoost, statsmodels)</li><li>Funnel, cohort and retention analysis</li><li>Unit economics (CAC, ROAS, LTV:CAC)</li><li>GA4-style event analysis</li><li>Churn modeling with point-in-time features</li><li>Experiment design and analysis</li><li>Forecasting and pacing</li><li>Stakeholder requirements</li></ul>
@@ -636,7 +636,7 @@ FROM churn_ranked ORDER BY p_churn DESC;
 </table></div>
 <p>Saves per dollar are identical across rows, because one average uplift was measured. Targeting shrinks the loss but doesn't turn it into a gain.</p>
 <p>The decision memo for Product was one paragraph: about 1,564 active subscribers are scored; the save offer would run on the top-three-decile monthly subscribers (469 people), where the measured uplift gives about 22 expected saves (~$4.6K of retained value) against ~$5.1K of offer cost, so it doesn't clear its cost as priced. Run it only if the offer gets cheaper or a purpose-built test shows a stronger response; engaged annuals get a nudge, not a discount; the low-risk bulk is left alone.</p>
-<p><strong>Recommendation (one page, three findings, three actions).</strong>
+<p><strong>Recommendation.</strong>
 1. Shift budget from paid social toward affiliate and paid search, and fix paid social's creative and targeting before cutting it. Blindly cutting loses reach.
 2. Don't scale the save offer as priced. Make it cheaper or run a per-segment test first, and lead with the no-cost annual-plan nudge, since plan is the strongest retention lever in the data.
 3. Invest in activation. Half of sign-ups never finish a first lesson, activation is lowest in the most expensive channel, and activation gates paying.</p>
